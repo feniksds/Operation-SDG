@@ -1,27 +1,24 @@
-public class State {
-    String naam;
-    int winst;
-    int duurzaamheid;
-    int reputatie;
-    int werknemers;
-    int co2;
+import java.util.Map;
+import java.util.*;
 
-    public State(String naam, int winst, int duurzaamheid, int reputatie, int werknemers, int co2) {
-        this.naam = naam;
-        this.winst = winst;
-        this.duurzaamheid = duurzaamheid;
-        this.reputatie = reputatie;
-        this.werknemers = werknemers;
-        this.co2 = co2;
+public abstract class State {
+    protected String beschrijving;
+    protected Map<Integer, String> opties;
+
+    public State(String beschrijving, Map<Integer, String> opties) {
+        this.beschrijving = beschrijving;
+        this.opties = opties;
     }
 
-    // Toon de huidige status van het bedrijf
-    public void toonStatus() {
-        System.out.println("\n" + naam + " status:");
-        System.out.println("Winst: " + winst);
-        System.out.println("Duurzaamheid: " + duurzaamheid);
-        System.out.println("Reputatie: " + reputatie);
-        System.out.println("Werknemers: " + werknemers);
-        System.out.println("CO2-uitstoot: " + co2);
+    public void toonOpties() {
+        System.out.println("\n" + beschrijving);
+        for (Map.Entry<Integer, String> entry : opties.entrySet()) {
+            System.out.println(entry.getKey() + ". " + entry.getValue());
+        }
+        System.out.print("Maak een keuze: ");
     }
+
+    public abstract State verwerkKeuze(int keuze, StudentStats stats);
 }
+
+
