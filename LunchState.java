@@ -11,12 +11,13 @@ public class LunchState extends State {
 
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
+        Map<String, Integer> map = stats.afvalProductie;
         if (keuze == 1) {
-            stats.afvalProductie += 1;
+            map.put("Biologisch afval", map.getOrDefault("Biologisch afval", 0) + 1);
         } else if (keuze == 2) {
-            stats.afvalProductie += 5;
+            map.put("Rest afval", map.getOrDefault("Rest afval", 0) + 5);
         } else if (keuze == 3) {
-            stats.afvalProductie += 10;
+            map.put("Rest afval", map.getOrDefault("Rest afval", 0) + 10);
             stats.co2Uitstoot += 20;
         }
         return new AvondActiviteitState();

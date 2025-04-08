@@ -15,7 +15,7 @@ public class VervoerInGentState extends State {
         if (keuze == 1) {
             stats.co2Uitstoot += 0;
         } else if (keuze == 2) {
-            stats.energieVerbruik += 5;
+
         } else if (keuze == 3) {
             stats.co2Uitstoot += 10;
         } else if (keuze == 4) {

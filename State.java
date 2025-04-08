@@ -5,6 +5,8 @@ public abstract class State {
     protected String beschrijving;
     protected Map<Integer, String> opties;
 
+
+
     public State(String beschrijving, Map<Integer, String> opties) {
         this.beschrijving = beschrijving;
         this.opties = opties;
