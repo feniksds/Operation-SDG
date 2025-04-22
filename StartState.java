@@ -2,18 +2,18 @@ import java.util.Map;
 
 public class StartState extends State {
     public StartState() {
-        super("Waar woont de student?", Map.of(
-            1, "Op kot in Gent",
-            2, "Thuis en reist naar Gent"
+        super("Waar naar school?", Map.of(
+            1, "Ver",
+            2, "Dichtbij"
         ));
     }
 
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            return new VervoerInGentState();
+            return new VerblijfState();//VervoerInGentState(); //verblijfvraag
         } else if (keuze == 2) {
-            return new ReizenNaarGentState();
+            return new VervoerState(); //ReizenNaarGentState();
         }
         return this;
     }

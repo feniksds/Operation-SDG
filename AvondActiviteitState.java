@@ -12,13 +12,13 @@ public class AvondActiviteitState extends State {
 
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
-        Map<String, Integer> map =stats.afvalProductie;
+        Map<String, Double> map =stats.afvalProductie;
         if (keuze == 1) {
             stats.co2Uitstoot += 15;
         } else if (keuze == 2) {
 
         } else if (keuze == 3) {
-            map.put("Industrieel afval", map.getOrDefault("Industrieel afval", 0) + 5);
+            map.put("Industrieel afval", map.getOrDefault("Industrieel afval", 0.0) + 5);
         }
         return null;
     }
