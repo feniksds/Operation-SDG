@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen
+
 public class StudyState extends State{
     public StudyState() {
         super("Hoe vaak gebruik je AI-tools tijdens het studeren?", Map.of(
@@ -13,10 +13,13 @@ public class StudyState extends State{
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
             //actie stat
+            //NIKS
         }else if (keuze == 2) {
-            //actie stat
+            //af en toe
+            stats.co2Uitstoot+= 5.304;
         }else if(keuze == 3){
-            //actie stat
+            //vaak
+            stats.co2Uitstoot+=10.61;
         }
         return new SnackState();
     }
