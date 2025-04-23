@@ -13,13 +13,13 @@ public class EtenStartState extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //actie
+            //alleenstaand
         }else if (keuze == 2) {
-            //actie
+            //huishouden 3 personen
         }else if(keuze == 3){
-            //actie
+            //huishouden 4 personen
         }else if(keuze == 4){
-            //actie
+            //actie 5 personen
         }
         return new KokenState();
     }
