@@ -1,12 +1,15 @@
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO  deftig coherent maken statistieken en tonen
+//TODO checken
 public class StudentStats {
     public double co2Uitstoot = 0; //in kg
     public double academischeImpact = 0; //in punten
     public double financieleImpact = 0; //in euro
     public int ritFactor = 0; //factor voor treinreizen
+    public double eetFactor=1;
+    public double prijsVoedsel=0;
+    public double eetCO2=0;
     public Map<String, Double> afvalProductie = new HashMap<>();  //ook in kg
     //voorlopig 2 soorten Plastic  en  Allerlei
 

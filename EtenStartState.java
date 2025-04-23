@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ Radi checken
+
 public class EtenStartState extends State {
     public EtenStartState() {
         super("Hoe groot is je huishouden?", Map.of(
@@ -14,14 +14,17 @@ public class EtenStartState extends State {
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
             //alleenstaand
+            stats.eetFactor = 1;
         }else if (keuze == 2) {
-            //huishouden 3 personen
+            stats.eetFactor = 0.85;
         }else if(keuze == 3){
             //huishouden 4 personen
+            stats.eetFactor = 0.75;
         }else if(keuze == 4){
             //actie 5 personen
+            stats.eetFactor = 0.70;
         }
-        return new KokenState();
+        return new GasState();
     }
 
 }

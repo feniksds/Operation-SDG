@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+Radi checken
+//TODO Radi checken
 public class KokenState extends State{
     public KokenState() {
         super("Kook je zelf of doet iemand anders dat voor jou?", Map.of(
@@ -11,9 +11,11 @@ public class KokenState extends State{
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //actie stats
+            //zelf
+            stats.prijsVoedsel+= 7.57 * stats.eetFactor;
         } else if (keuze == 2) {
-            //actie stats
+            //iemand anders
+            //niks volgens Radi.
         }
         return new VleesState();
     }

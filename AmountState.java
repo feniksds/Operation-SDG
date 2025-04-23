@@ -1,14 +1,14 @@
 import java.util.Map;
 import java.util.Scanner;
 
-public class VleesState extends State {
-    public VleesState() {
-        super("🥩 Vleesconsumptie", Map.of()); // lege map zodat standaard opties niet worden getoond
+public class AmountState extends State {
+    public AmountState() {
+        super("🍳 Zelf koken", Map.of()); // Lege map zodat standaard opties niet worden getoond
     }
 
     @Override
     public void toonOpties() {
-        System.out.print("\n🥩 Hoe vaak per week eet je vlees? ");
+        System.out.print("\n🍳 Hoe vaak per week kook je zelf thuis of op kot? ");
     }
 
     @Override
@@ -30,9 +30,10 @@ public class VleesState extends State {
             }
         }
 
-        // Voorbeeld-impact van vleesconsumptie
-        stats.co2Uitstoot += aantalKeer * 22.6*0.15;
+        // Impact als je zelf kookt
+        stats.financieleImpact += aantalKeer*stats.prijsVoedsel; // prijs per maaltijd maal aantal keren
+        stats.co2Uitstoot += aantalKeer*stats.eetCO2; ; // voorbeeld: zelf koken vereist planning
 
-        return new VeganState(); // volgende state
+        return new FastFoodState(); // volgende logische state
     }
 }

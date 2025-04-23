@@ -1,14 +1,14 @@
 import java.util.Map;
 import java.util.Scanner;
 
-public class VleesState extends State {
-    public VleesState() {
-        super("🥩 Vleesconsumptie", Map.of()); // lege map zodat standaard opties niet worden getoond
+public class FruitState extends State {
+    public FruitState() {
+        super("🍎 Fruitconsumptie", Map.of()); // geen standaardopties
     }
 
     @Override
     public void toonOpties() {
-        System.out.print("\n🥩 Hoe vaak per week eet je vlees? ");
+        System.out.print("\n🍎 Hoe vaak per week eet je fruit? ");
     }
 
     @Override
@@ -30,9 +30,8 @@ public class VleesState extends State {
             }
         }
 
-        // Voorbeeld-impact van vleesconsumptie
-        stats.co2Uitstoot += aantalKeer * 22.6*0.15;
+        stats.co2Uitstoot += aantalKeer * 3.40*0.13;
 
-        return new VeganState(); // volgende state
+        return new AmountState(); // volgende state
     }
 }
