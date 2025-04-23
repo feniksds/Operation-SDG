@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen
+
 public class VerblijfState extends State {
     public VerblijfState() {
         super("Waar woon je, thuis of op kot?", Map.of(
@@ -11,9 +11,9 @@ public class VerblijfState extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //actie
+            stats.treinFactor = 10; //als als week gerekend wordt
         } else if (keuze == 2) {
-            //actieee
+            stats.treinFactor = 2; //als als week gerekend wordt anders negeren en per dag
         }
         return new VervoerState();
 

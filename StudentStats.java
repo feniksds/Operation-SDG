@@ -7,8 +7,9 @@ public class StudentStats {
     public double academischeImpact = 0; //in punten
     public double FinancieleImpact = 0; //in euro
     public int treinFactor = 0; //factor voor treinreizen
+    public boolean afstandsFactor = false; //true als ver
     public Map<String, Double> afvalProductie = new HashMap<>();  //ook in kg
-    //voorlopig 2 soorten Plastic  en  ZIE Thomas
+    //voorlopig 2 soorten Plastic  en  Allerlei
 
     public void toonStats() {
         System.out.println("\n📊 Huidige statistieken:");

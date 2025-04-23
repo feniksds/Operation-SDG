@@ -12,7 +12,7 @@ public class VervoerState  extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //stats here
+            //stats auto
             return new AutoState() ; //verblijfvraag
         } else if (keuze == 2) {
             //stats here

@@ -1,10 +1,18 @@
 public class Main {
     static int yearToDaily(int getal) {
-        return getal * 365;
+        return getal/365;
     }
 
     static int monthToDaily(int getal) {
-        return getal * 30;
+        return getal/30;
+    }
+
+    static int yeartoWeekly(int getal) {
+        return getal/52;
+    }
+
+    static int monthToWeekly(int getal) {
+        return getal/4;
     }
 
     public static void main(String[] args) {
