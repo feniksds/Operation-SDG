@@ -11,9 +11,9 @@ public class VerblijfState extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            stats.RitFactor = 10; //als als week gerekend wordt
+            stats.ritFactor = 10; //als als week gerekend wordt
         } else if (keuze == 2) {
-            stats.RitFactor = 2; //als als week gerekend wordt anders negeren en per dag
+            stats.ritFactor = 2; //als als week gerekend wordt anders negeren en per dag
         }
         return new VervoerState();
 
