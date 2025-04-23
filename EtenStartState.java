@@ -1,12 +1,12 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ vraag fixen
+//TODO stats veranderingen aanvullen+ Radi checken
 public class EtenStartState extends State {
     public EtenStartState() {
-        super("Aantal mensen in huis", Map.of(
-            1, "Enkel huishouden",
-            2, "Drie persoons huishouden",
-            3, "Vier persoons huishouden",
-            4, "Vijf persoons huishouden"
+        super("Hoe groot is je huishouden?", Map.of(
+            1, "Alleenstaand",
+            2, "Huishouden van 3 personen",
+            3, "Huishouden van 4 personen",
+            4, "Huishouden van 5 personen"
         ));
     }
 
@@ -14,7 +14,11 @@ public class EtenStartState extends State {
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
             //actie
-        } else if (keuze == 2) {
+        }else if (keuze == 2) {
+            //actie
+        }else if(keuze == 3){
+            //actie
+        }else if(keuze == 4){
             //actie
         }
         return new KokenState();

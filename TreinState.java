@@ -1,8 +1,8 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ vraag fixen
+//TODO stats veranderingen aanvullen
 public class TreinState extends State {
     public TreinState() {
-        super("Welk vervoer neem je van huis naar station \nof van campus naar kot?", Map.of(
+        super("Hoe verplaats je je van thuis naar het station \nof van campus naar je kot?", Map.of(
             1, "Fiets",
             2, "Bus",
             3, "Te voet",
@@ -13,13 +13,13 @@ public class TreinState extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-             //actie
+             //actie stats
         } else if (keuze == 2) {
-            //actie
+            //actie stats
         }else if(keuze == 3){
-            //actie
+            //actie stats
         }else if(keuze == 4){
-            //actie
+            //actie stats
         }
         return new EtenStartState();
     }

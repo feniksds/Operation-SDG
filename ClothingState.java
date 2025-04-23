@@ -1,21 +1,19 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ vraag fixen
+//TODO stats veranderingen aanvullen
 public class ClothingState extends State {
     public ClothingState() {
-        super("Aantal mensen in huis", Map.of(
-            1, "Enkel huishouden",
-            2, "Drie persoons huishouden",
-            3, "Vier persoons huishouden",
-            4, "Vijf persoons huishouden"
+        super("Wat voor soort kleren koop je meestal?", Map.of(
+            1, "Nieuw",
+            2, "Tweedehands"
         ));
     }
 
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //actie
+            //actie stat
         } else if (keuze == 2) {
-            //actie
+            //actie stat
         }
         return new SubscribeState();
     }

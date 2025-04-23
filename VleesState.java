@@ -1,12 +1,10 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ vraag fixen
+//TODO stats veranderingen aanvullen+ Radi checken
 public class VleesState extends State {
     public VleesState() {
-        super("Aantal mensen in huis", Map.of(
-            1, "Enkel huishouden",
-            2, "Drie persoons huishouden",
-            3, "Vier persoons huishouden",
-            4, "Vijf persoons huishouden"
+        super("Eet je vlees?", Map.of(
+            1, "Ja",
+            2, "Nee"
         ));
     }
 

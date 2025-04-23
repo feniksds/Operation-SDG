@@ -1,8 +1,8 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ vraag fixen
+//TODO stats veranderingen aanvullen
 public class AutoState extends State {
     public AutoState() {
-        super("Is de auto elektrisch, hybride, \ndiesel of benzine?", Map.of(
+        super("Welk type voertuig gebruik je?", Map.of(
             1, "Elektrisch",
             2, "Diesel",
             3, "Hybride",
@@ -13,13 +13,13 @@ public class AutoState extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //verblijfvraag
+            //actie stats
         } else if (keuze == 2) {
-            //
+            //actie stats
         }else if(keuze == 3){
-            //
+            //actie stats
         }else if(keuze == 4){
-            //
+            //actie stats
         }
         return new EtenStartState();
     }

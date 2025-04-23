@@ -1,21 +1,19 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ vraag fixen
+//TODO stats veranderingen aanvullen+ Thomas checken
 public class SubscribeState extends State{
     public SubscribeState() {
-        super("Aantal mensen in huis", Map.of(
-            1, "Enkel huishouden",
-            2, "Drie persoons huishouden",
-            3, "Vier persoons huishouden",
-            4, "Vijf persoons huishouden"
+        super("Heb je een abbonement op een streaming dienst?", Map.of(
+            1, "Ja",
+            2, "Nee"
         ));
     }
 
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //actie
+            //actie stats
         } else if (keuze == 2) {
-            //actie
+            //actie stats
         }
         return null;
     }
