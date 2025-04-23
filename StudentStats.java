@@ -12,11 +12,11 @@ public class StudentStats {
 
     public void toonStats() {
         System.out.println("\n📊 Huidige statistieken:");
-        System.out.println("🌍 CO₂-uitstoot: " + co2Uitstoot);
+        System.out.println("🌍 CO₂-uitstoot: " + co2Uitstoot+ " kg");
         for(Map.Entry<String, Double> entry : afvalProductie.entrySet()) {
-            System.out.println("🗑️ Afvalproductie van " + entry.getKey() + ": " + entry.getValue());
+            System.out.println("🗑️ Afvalproductie van " + entry.getKey() + ": " + entry.getValue()+ " kg");
         }
-        System.out.println("📚 Academische impact: " + academischeImpact);
-        System.out.println("💰 Financiële impact: " + financieleImpact);
+        System.out.println("📚 Academische impact: " + academischeImpact+ " (een hogere score wijst op betere studieresultaten)");
+        System.out.println("💰 Financiële impact: " + financieleImpact+ " euro");
     }
 }

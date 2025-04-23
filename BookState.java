@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen
+
 public class BookState extends State {
     public BookState() {
         super("Hoe koop je je studieboeken?", Map.of(
@@ -12,11 +12,14 @@ public class BookState extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if(keuze == 1) {
-            //actie stat
+            //niks
         }else if (keuze == 2) {
-            //actie stat
+            //nieuw
+            stats.co2Uitstoot+= 7.2;
+            stats.financieleImpact-= Main.monthToWeekly(10);
         }else if(keuze == 3){
-            //actie stat
+            //2de hands
+            stats.financieleImpact-= Main.monthToWeekly(5);
         }
         return new JobState();
     }

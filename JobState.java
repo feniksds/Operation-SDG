@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen
+
 public class JobState extends State{
     public JobState() {
         super("Heb je een studentenjob?", Map.of(
@@ -13,13 +13,20 @@ public class JobState extends State{
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if(keuze == 1) {
-            //actie stat
+            //nee
+            stats.academischeImpact += 2;
         }else if(keuze == 2) {
-            //actie stat
+            //weekend
+            stats.financieleImpact += Main.monthToWeekly(227);
+            stats.academischeImpact -=1;
         }else if(keuze == 3) {
-            //actie stat
+            //part
+            stats.financieleImpact += Main.monthToWeekly(737.75);
+            stats.academischeImpact -= 2;
         }else if(keuze == 4) {
-            //actie stat
+            //full
+            stats.financieleImpact += Main.monthToWeekly(2156.5);
+            stats.academischeImpact -=3;
         }
         return new ClothingState();
     }

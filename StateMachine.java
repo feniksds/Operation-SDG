@@ -14,21 +14,24 @@ public class StateMachine {
     public void start() {
     while (huidigeState != null) {
         huidigeState.toonOpties();
-        int keuze;
+        int keuze = -1;
 
-        // input correct inlezen en valideren
-        while (true) {
-            try {
-                String input = scanner.nextLine();
-                keuze = Integer.parseInt(input);
 
-                if (!huidigeState.opties.containsKey(keuze)) {
-                    System.out.println("❌ Ongeldige keuze. Kies een nummer uit de lijst.");
-                    continue;
+        if(!huidigeState.opties.isEmpty()){
+            // input correct inlezen en valideren
+            while (true) {
+                try {
+                    String input = scanner.nextLine();
+                    keuze = Integer.parseInt(input);
+
+                    if (!huidigeState.opties.containsKey(keuze)) {
+                        System.out.println("❌ Ongeldige keuze. Kies een nummer uit de lijst.");
+                        continue;
+                    }
+                    break; // geldige keuze
+                }catch (NumberFormatException e) {
+                    System.out.println("❌ Ongeldige invoer. Geef een getal in.");
                 }
-                break; // geldige keuze
-            } catch (NumberFormatException e) {
-                System.out.println("❌ Ongeldige invoer. Geef een getal in.");
             }
         }
 

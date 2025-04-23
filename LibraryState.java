@@ -20,6 +20,7 @@ public class LibraryState extends State{
             stats.academischeImpact += 1;
         } else if (keuze == 4) {
             stats.academischeImpact -= 3;
+            stats.financieleImpact -= 0.76*3;
         }
         return new FinancialState();
     }

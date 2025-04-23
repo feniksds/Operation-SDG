@@ -23,19 +23,19 @@ public class AutoState extends State {
         if (keuze == 1) {
             //elektriek
             stats.co2Uitstoot += afstand * 0.058;
-            stats.financieleImpact += Main.monthToWeekly(940);
+            stats.financieleImpact -= Main.monthToWeekly(940);
         } else if (keuze == 2) {
             //diesel
             stats.co2Uitstoot += afstand * 0.192;
-            stats.financieleImpact += Main.monthToWeekly(1001);
+            stats.financieleImpact -= Main.monthToWeekly(1001);
         }else if(keuze == 3){
             //hybride
             stats.co2Uitstoot += afstand * 0.186;
-            stats.financieleImpact += Main.monthToWeekly(1173);
+            stats.financieleImpact -= Main.monthToWeekly(1173);
         }else if(keuze == 4){
             //benzine
             stats.co2Uitstoot += afstand * 0.205;
-            stats.financieleImpact += Main.monthToWeekly(1002);
+            stats.financieleImpact -= Main.monthToWeekly(1002);
         }
         return new EtenStartState();
     }

@@ -1,20 +1,41 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ Thomas checken
-public class SubscribeState extends State{
+import java.util.Scanner;
+
+public class SubscribeState extends State {
+
     public SubscribeState() {
-        super("Heb je een abbonement op een streaming dienst?", Map.of(
-            1, "Ja",
-            2, "Nee"
-        ));
+        // Geef een lege opties-map mee zodat er niets wordt weergegeven in de standaard toonOpties()
+        super("Streaminggebruik", Map.of());
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
-        if (keuze == 1) {
-            //actie stats
-        } else if (keuze == 2) {
-            //actie stats
+    public void toonOpties() {
+        // Override de standaard tekst om rechtstreeks je vraag te stellen
+         System.out.print("\n🎥 Hoeveel uur stream je gemiddeld per week? ");
+    }
+
+    @Override
+    public State verwerkKeuze(int _unused, StudentStats stats) {
+        Scanner scanner = new Scanner(System.in);
+        double aantalUren = -1;
+
+        while (aantalUren < 0) {
+            try {
+                String input = scanner.nextLine();
+                aantalUren = Double.parseDouble(input);
+
+                if (aantalUren < 0) {
+                    System.out.print("❌ Geef een positief getal: ");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.print("❌ Ongeldige invoer. Geef een getal in: ");
+            }
         }
-        return null;
+
+        stats.financieleImpact += 15; // bv. 15 euro voor Netflix
+        stats.co2Uitstoot += aantalUren * 0.015; // 15g CO₂ per uur streaming
+
+        return null; // of de volgende echte state
     }
 }
