@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen
+
 public class StartState extends State {
     public StartState() {
         super("Waar ga je naar school?", Map.of(
@@ -11,11 +11,11 @@ public class StartState extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //stat aanpassingen
-            return new VerblijfState();//VervoerInGentState(); //verblijfvraag
+            //geen stat aanpassingen
+            return new VerblijfState();
         } else if (keuze == 2) {
-            //stat aanpassingen
-            return new VervoerState(); //ReizenNaarGentState();
+            //geen stat aanpassingen
+            return new VervoerState();
         }
         return this;
     }

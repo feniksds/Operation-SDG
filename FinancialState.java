@@ -1,5 +1,6 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen
+//TODO stats veranderingen  + vraag aan Thomas die 1200 kilo afval wa voor soort is da?
+
 public class FinancialState extends State {
     public FinancialState() {
         super("Welke laptop kies je voor je studies?", Map.of(
@@ -12,11 +13,12 @@ public class FinancialState extends State {
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
-            //actie stat
+            //actie stat Duurste laptop
+            //waste zie Thomas
         } else if (keuze == 2) {
-            //actie stat
+            //actie stat net genoeg laptop
         }else if(keuze == 3){
-            //actie stat
+            //actie stat tweedehands laptop
         }
         return new SchoolState();
     }

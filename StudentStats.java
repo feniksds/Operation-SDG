@@ -3,12 +3,12 @@ import java.util.Map;
 
 //TODO  deftig coherent maken statistieken en tonen
 public class StudentStats {
-    public double co2Uitstoot = 0;
-    public double academischeImpact = 0;
-    public double FinancieleImpact = 0;
-    public int treinFactor = 0;
-    public Map<String, Double> afvalProductie = new HashMap<>();
-
+    public double co2Uitstoot = 0; //in kg
+    public double academischeImpact = 0; //in punten
+    public double FinancieleImpact = 0; //in euro
+    public int treinFactor = 0; //factor voor treinreizen
+    public Map<String, Double> afvalProductie = new HashMap<>();  //ook in kg
+    //voorlopig 2 soorten Plastic  en  ZIE Thomas
 
     public void toonStats() {
         System.out.println("\n📊 Huidige statistieken:");
