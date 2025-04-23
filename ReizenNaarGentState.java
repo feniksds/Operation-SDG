@@ -1,4 +1,4 @@
-//TODO original deprecated
+//TODO original DEPRECATED
 
 import java.util.Map;
 
@@ -19,6 +19,6 @@ public class ReizenNaarGentState extends State {
         } else if (keuze == 2) {
             stats.co2Uitstoot += 5;
         }
-        return new LunchState();
+        return null;
     }
 }

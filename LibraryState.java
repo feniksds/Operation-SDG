@@ -1,7 +1,7 @@
 import java.util.Map;
 
-public class KokenState extends State{
-    public KokenState() {
+public class LibraryState extends State{
+    public LibraryState() {
         super("Aantal mensen in huis", Map.of(
             1, "Enkel huishouden",
             2, "Drie persoons huishouden",
@@ -17,6 +17,6 @@ public class KokenState extends State{
         } else if (keuze == 2) {
             //actie
         }
-        return new VleesState();
+        return new FinancialState();
     }
 }

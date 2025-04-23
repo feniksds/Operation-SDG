@@ -1,4 +1,5 @@
 //TODO is deprecated
+
 import java.util.Map;
 
 public class VervoerInGentState extends State {
@@ -22,6 +23,6 @@ public class VervoerInGentState extends State {
         } else if (keuze == 4) {
             stats.co2Uitstoot += 0;
         }
-        return new LunchState();
+        return null;
     }
 }

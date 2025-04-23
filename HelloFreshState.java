@@ -17,6 +17,6 @@ public class HelloFreshState extends State {
         } else if (keuze == 2) {
             //actie
         }
-        return new KokenState();
+        return new BoodschappenState();
     }
 }
