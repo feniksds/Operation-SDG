@@ -1,5 +1,5 @@
 import java.util.*;
-
+//TODO GUI?
 public class StateMachine {
     private State huidigeState;
     private Scanner scanner;
@@ -12,14 +12,32 @@ public class StateMachine {
     }
 
     public void start() {
-        while (huidigeState != null) {
-            huidigeState.toonOpties();
-            int keuze = scanner.nextInt();
-            huidigeState = huidigeState.verwerkKeuze(keuze, stats);
+    while (huidigeState != null) {
+        huidigeState.toonOpties();
+        int keuze;
+
+        // input correct inlezen en valideren
+        while (true) {
+            try {
+                String input = scanner.nextLine();
+                keuze = Integer.parseInt(input);
+
+                if (!huidigeState.opties.containsKey(keuze)) {
+                    System.out.println("❌ Ongeldige keuze. Kies een nummer uit de lijst.");
+                    continue;
+                }
+                break; // geldige keuze
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Ongeldige invoer. Geef een getal in.");
+            }
         }
-        stats.toonStats();
-        System.out.println("\n📌 Dag afgelopen! Dit was jouw impact op de wereld.");
+
+        huidigeState = huidigeState.verwerkKeuze(keuze, stats);
     }
+
+    stats.toonStats();
+    System.out.println("\n📌 Dag afgelopen! Dit was jouw impact op de wereld.");
+}
 
     public void evalueer() {
 

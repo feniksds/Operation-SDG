@@ -1,6 +1,6 @@
 import java.util.Map;
 import java.util.*;
-
+//TODO GUI?
 public abstract class State {
     protected String beschrijving;
     protected Map<Integer, String> opties;
@@ -9,7 +9,7 @@ public abstract class State {
 
     public State(String beschrijving, Map<Integer, String> opties) {
         this.beschrijving = beschrijving;
-        this.opties = opties;
+        this.opties = new TreeMap<>(opties);
     }
 
     public void toonOpties() {
