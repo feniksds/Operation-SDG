@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ Radi checken
+//TODO Radi checken  ("KGa dit deprecaten want geen data ofzo" Feniks )
 public class BoodschappenState extends State {
     public BoodschappenState() {
         super("Koop je meestal biologische,\n merk- of huismerkproducten?", Map.of(
@@ -16,6 +16,6 @@ public class BoodschappenState extends State {
         } else if (keuze == 2) {
             //actie stats
         }
-        return new StudyState();
+        return this;
     }
 }

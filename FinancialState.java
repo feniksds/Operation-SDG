@@ -16,12 +16,14 @@ public class FinancialState extends State {
             //waste zie Thomas
             stats.co2Uitstoot+=280;
             stats.financieleImpact-=1200;
+            stats.eenmaligeAankopen-=1200;
             stats.academischeImpact+=2;
             map.put("industrieel afval", map.getOrDefault("industrieel afval", 0.0) + 1200);
         } else if (keuze == 2) {
             //actie stat net genoeg laptop
             stats.co2Uitstoot+=56;
             stats.financieleImpact-=1000;
+            stats.eenmaligeAankopen-=1000;
             stats.academischeImpact+=1;
         }
         return new SchoolState();

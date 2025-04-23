@@ -1,6 +1,6 @@
 import java.util.Map;
 import java.util.Scanner;
-
+//TODO checken Radi
 public class FruitState extends State {
     public FruitState() {
         super("🍎 Fruitconsumptie", Map.of()); // geen standaardopties

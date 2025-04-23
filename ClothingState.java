@@ -14,9 +14,11 @@ public class ClothingState extends State {
             //nieuw
             stats.co2Uitstoot+=270;
             stats.financieleImpact-=  60;
+            stats.eenmaligeAankopen-= 60;
         } else if (keuze == 2) {
             //2dehands
             stats.financieleImpact-= 20;
+            stats.eenmaligeAankopen-= 20;
         }
         return new SubscribeState();
     }

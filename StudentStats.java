@@ -1,7 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO checken
 public class StudentStats {
     public double co2Uitstoot = 0; //in kg
     public double academischeImpact = 0; //in punten
@@ -10,6 +9,7 @@ public class StudentStats {
     public double eetFactor=1;
     public double prijsVoedsel=0;
     public double eetCO2=0;
+    public double eenmaligeAankopen=0;
     public Map<String, Double> afvalProductie = new HashMap<>();  //ook in kg
     //voorlopig 2 soorten Plastic  en  Allerlei
 
@@ -20,6 +20,8 @@ public class StudentStats {
             System.out.println("🗑️ Afvalproductie van " + entry.getKey() + ": " + entry.getValue()+ " kg");
         }
         System.out.println("📚 Academische impact: " + academischeImpact+ " (een hogere score wijst op betere studieresultaten)");
-        System.out.println("💰 Financiële impact: " + financieleImpact+ " euro");
+        System.out.println("💰 Totale financiële impact: " + financieleImpact + " euro");
+        System.out.println("   ↳ Waarvan eenmalige aankopen: " + eenmaligeAankopen + " euro");
+        System.out.println("   ↳ Wekelijkse/semesterkosten: " + (financieleImpact - eenmaligeAankopen) + " euro");
     }
 }

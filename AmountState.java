@@ -1,6 +1,6 @@
 import java.util.Map;
 import java.util.Scanner;
-
+//TODO checken  RADI
 public class AmountState extends State {
     public AmountState() {
         super("🍳 Zelf koken", Map.of()); // Lege map zodat standaard opties niet worden getoond
@@ -8,7 +8,7 @@ public class AmountState extends State {
 
     @Override
     public void toonOpties() {
-        System.out.print("\n🍳 Hoe vaak per week kook je zelf thuis of op kot? ");
+        System.out.print("\n🍳 Hoe vaak per week wordt er door jou of iemand anders thuis of op kot gekookt? ");
     }
 
     @Override
@@ -32,7 +32,7 @@ public class AmountState extends State {
 
         // Impact als je zelf kookt
         stats.financieleImpact += aantalKeer*stats.prijsVoedsel; // prijs per maaltijd maal aantal keren
-        stats.co2Uitstoot += aantalKeer*stats.eetCO2; ; // voorbeeld: zelf koken vereist planning
+        stats.co2Uitstoot += aantalKeer*stats.eetCO2; ;
 
         return new FastFoodState(); // volgende logische state
     }

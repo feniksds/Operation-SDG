@@ -1,5 +1,5 @@
 import java.util.Map;
-
+//TODO Radi checken
 public class EtenStartState extends State {
     public EtenStartState() {
         super("Hoe groot is je huishouden?", Map.of(

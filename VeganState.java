@@ -1,6 +1,6 @@
 import java.util.Map;
 import java.util.Scanner;
-
+//TODO checken Radi
 public class VeganState extends State {
     public VeganState() {
         super("🌱 Vegan/vegetarisch", Map.of()); // geen standaardopties

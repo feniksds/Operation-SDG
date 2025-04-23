@@ -1,5 +1,5 @@
 import java.util.Map;
-
+//TODO Radi checken
 public class GasState extends State {
     public GasState() {
         super("Kook je thuis op gas of inductie?", Map.of(

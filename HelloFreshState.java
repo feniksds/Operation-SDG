@@ -1,6 +1,6 @@
 import java.util.Map;
 import java.util.Scanner;
-
+//TODO checken  RADI
 public class HelloFreshState extends State {
     public HelloFreshState() {
         super("🍽️ Maaltijdbezorging", Map.of()); // lege map zodat standaard opties niet worden getoond
@@ -37,6 +37,6 @@ public class HelloFreshState extends State {
         map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.038);
         map.put("Karton", map.getOrDefault("Karton", 0.0) + 0.097);
 
-        return new BoodschappenState(); // of een andere logische volgende state
+        return new StudyState();
     }
 }

@@ -1,20 +1,40 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen+ Radi checken
+import java.util.Scanner;
+//TODO checken  RADI
 public class TakeawayState extends State {
     public TakeawayState() {
-        super("Bestel je Takeaway?", Map.of(
-            1, "Ja",
-            2, "Nee"
-        ));
+        super("🍱 Afhaalmaaltijden", Map.of()); // geen standaardopties
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
-        if (keuze == 1) {
-            //actie stats
-        } else if (keuze == 2) {
-            //actie stats
+    public void toonOpties() {
+        System.out.print("\n🍱 Hoe vaak per week bestel je Takeaway (zoals Deliveroo, Uber Eats, lokale restaurants...)? ");
+    }
+
+    @Override
+    public State verwerkKeuze(int _unused, StudentStats stats) {
+        Scanner scanner = new Scanner(System.in);
+        int aantalKeer = -1;
+
+        while (aantalKeer < 0) {
+            try {
+                String input = scanner.nextLine();
+                aantalKeer = Integer.parseInt(input);
+
+                if (aantalKeer < 0) {
+                    System.out.print("❌ Geef een positief getal: ");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.print("❌ Ongeldige invoer. Geef een geheel getal in: ");
+            }
         }
-        return new HelloFreshState();
+
+        // Voorbeeldimpact per bestelling
+        stats.financieleImpact += aantalKeer * 10;           // bv. €13 per bestelling
+        stats.co2Uitstoot += aantalKeer * (0.06+0.72+0.34)/3;                // bv. 2.8 kg CO₂ per maaltijd
+
+
+        return new HelloFreshState(); // volgende state
     }
 }

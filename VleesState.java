@@ -1,6 +1,6 @@
 import java.util.Map;
 import java.util.Scanner;
-
+//TODO checken Radi
 public class VleesState extends State {
     public VleesState() {
         super("🥩 Vleesconsumptie", Map.of()); // lege map zodat standaard opties niet worden getoond
