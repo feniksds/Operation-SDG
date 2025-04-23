@@ -1,5 +1,5 @@
 import java.util.Map;
-
+//TODO stats veranderingen aanvullen+ vraag fixen
 public class TreinState extends State {
     public TreinState() {
         super("Welk vervoer neem je van huis naar station \nof van campus naar kot?", Map.of(

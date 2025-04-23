@@ -1,5 +1,5 @@
-//TODO is deprecated
-
+//deprecated
+//Deprecated
 import java.util.Map;
 
 public class VervoerInGentState extends State {

@@ -1,5 +1,5 @@
 import java.util.Map;
-
+//TODO stats veranderingen aanvullen+ vraag fixen
 public class JobState extends State{
     public JobState() {
         super("Aantal mensen in huis", Map.of(

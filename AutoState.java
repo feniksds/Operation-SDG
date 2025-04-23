@@ -1,5 +1,5 @@
 import java.util.Map;
-
+//TODO stats veranderingen aanvullen+ vraag fixen
 public class AutoState extends State {
     public AutoState() {
         super("Is de auto elektrisch, hybride, \ndiesel of benzine?", Map.of(

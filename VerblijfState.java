@@ -1,5 +1,5 @@
 import java.util.Map;
-
+//TODO stats veranderingen aanvullen+ vraag fixen
 public class VerblijfState extends State {
     public VerblijfState() {
         super("Waar woon je thuis of op kot?", Map.of(
