@@ -1,5 +1,5 @@
 import java.util.Map;
-//TODO stats veranderingen aanvullen
+
 public class AutoState extends State {
     public AutoState() {
         super("Welk type voertuig gebruik je?", Map.of(
@@ -9,17 +9,33 @@ public class AutoState extends State {
             4, "Benzine"
         ));
     }
+    ;
 
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
+        double afstand=0;
+        if(stats.ritFactor == 10){
+            afstand= 62.1;
+        }else{
+            afstand= 3.9;
+        }
+
         if (keuze == 1) {
-            //actie stats
+            //elektriek
+            stats.co2Uitstoot += afstand * 0.058;
+            stats.financieleImpact += Main.monthToWeekly(940);
         } else if (keuze == 2) {
-            //actie stats
+            //diesel
+            stats.co2Uitstoot += afstand * 0.192;
+            stats.financieleImpact += Main.monthToWeekly(1001);
         }else if(keuze == 3){
-            //actie stats
+            //hybride
+            stats.co2Uitstoot += afstand * 0.186;
+            stats.financieleImpact += Main.monthToWeekly(1173);
         }else if(keuze == 4){
-            //actie stats
+            //benzine
+            stats.co2Uitstoot += afstand * 0.205;
+            stats.financieleImpact += Main.monthToWeekly(1002);
         }
         return new EtenStartState();
     }

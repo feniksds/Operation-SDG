@@ -12,11 +12,10 @@ public class StartState extends State {
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
             //geen stat aanpassingen
-            stats.afstandsFactor = true; //ver
             return new VerblijfState();
         } else if (keuze == 2) {
             //geen stat aanpassingen
-            return new VervoerState();
+            return new TreinState();
         }
         return this;
     }

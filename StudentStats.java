@@ -5,9 +5,8 @@ import java.util.Map;
 public class StudentStats {
     public double co2Uitstoot = 0; //in kg
     public double academischeImpact = 0; //in punten
-    public double FinancieleImpact = 0; //in euro
-    public int treinFactor = 0; //factor voor treinreizen
-    public boolean afstandsFactor = false; //true als ver
+    public double financieleImpact = 0; //in euro
+    public int ritFactor = 0; //factor voor treinreizen
     public Map<String, Double> afvalProductie = new HashMap<>();  //ook in kg
     //voorlopig 2 soorten Plastic  en  Allerlei
 
@@ -18,6 +17,6 @@ public class StudentStats {
             System.out.println("🗑️ Afvalproductie van " + entry.getKey() + ": " + entry.getValue());
         }
         System.out.println("📚 Academische impact: " + academischeImpact);
-        System.out.println("💰 Financiële impact: " + FinancieleImpact);
+        System.out.println("💰 Financiële impact: " + financieleImpact);
     }
 }
