@@ -1,17 +1,17 @@
 public class Main {
-    static int yearToDaily(int getal) {
+    static double yearToDaily(double getal) {
         return getal/365;
     }
 
-    static int monthToDaily(int getal) {
+    static double monthToDaily(double getal) {
         return getal/30;
     }
 
-    static int yeartoWeekly(int getal) {
+    static double yeartoWeekly(double getal) {
         return getal/52;
     }
 
-    static int monthToWeekly(int getal) {
+    static double monthToWeekly(double getal) {
         return getal/4;
     }
 

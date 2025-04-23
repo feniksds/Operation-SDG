@@ -16,10 +16,12 @@ public class StudyState extends State{
             //NIKS
         }else if (keuze == 2) {
             //af en toe
-            stats.co2Uitstoot+= 5.304;
+            stats.co2Uitstoot+= Main.yeartoWeekly(5.304);
+            stats.academischeImpact+= 1;
         }else if(keuze == 3){
             //vaak
-            stats.co2Uitstoot+=10.61;
+            stats.co2Uitstoot+=Main.yeartoWeekly(10.61);
+            stats.academischeImpact+= 2;
         }
         return new SnackState();
     }
