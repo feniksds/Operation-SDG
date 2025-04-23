@@ -13,6 +13,7 @@ public class HelloFreshState extends State {
 
     @Override
     public State verwerkKeuze(int _unused, StudentStats stats) {
+        Map<String, Double> map =stats.afvalProductie;
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
 
@@ -31,9 +32,10 @@ public class HelloFreshState extends State {
         }
 
         // voorbeeldimpact per maaltijd
-        stats.financieleImpact += aantalKeer * 10;   // bv. 10 euro per maaltijd
-        stats.co2Uitstoot += aantalKeer * 0.7;       // bv. 700g CO₂ per maaltijd
-        stats.afvalProductie.merge("Plastic", aantalKeer * 0.1, Double::sum); // 100g plastic per levering
+        stats.financieleImpact += aantalKeer * 11.98;   // bv. 10 euro per maaltijd
+        stats.co2Uitstoot += aantalKeer * 8.1;       // bv. 700g CO₂ per maaltijd
+        map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.038);
+        map.put("Karton", map.getOrDefault("Karton", 0.0) + 0.097);
 
         return new BoodschappenState(); // of een andere logische volgende state
     }
