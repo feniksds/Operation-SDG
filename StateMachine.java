@@ -39,7 +39,7 @@ public class StateMachine {
     }
 
     stats.toonStats();
-    System.out.println("\n📌 Dag afgelopen! Dit was jouw impact op de wereld.");
+    System.out.println("\n📌 Week afgelopen! Dit was jouw impact op de wereld.");
 }
 
     public void evalueer() {
