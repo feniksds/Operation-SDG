@@ -16,11 +16,12 @@ public class VervoerState  extends State {
         } else if (keuze == 2) {
             //stats here
             //de trein  gebruik ritfactor
-
+            //33.70 kùm   1 rit 6.70
+            stats.co2Uitstoot += stats.ritFactor* 33.70*0.017;
+            stats.financieleImpact += stats.ritFactor*6.70;
             return new TreinState();
         }else if(keuze == 3){
             //stats here
-
             return new TreinState();
         }
         return this;
