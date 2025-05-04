@@ -5,7 +5,7 @@ public class SubscribeState extends State {
 
     public SubscribeState() {
         // Geef een lege opties-map mee zodat er niets wordt weergegeven in de standaard toonOpties()
-        super("Streaminggebruik", Map.of());
+        super("Streaminggebruik", Map.of(),"input","images/Hoeveel uur stream je gemiddeld per week.png");
     }
 
     @Override
@@ -16,6 +16,7 @@ public class SubscribeState extends State {
 
     @Override
     public State verwerkKeuze(int _unused, StudentStats stats) {
+        /*
         Scanner scanner = new Scanner(System.in);
         double aantalUren = -1;
 
@@ -35,6 +36,14 @@ public class SubscribeState extends State {
 
         stats.financieleImpact += 15; // bv. 15 euro voor Netflix
         stats.co2Uitstoot += aantalUren * 0.015; // 15g CO₂ per uur streaming
+        stats.toonStats();
+
+         */
+
+
+        stats.financieleImpact += 15; // bv. 15 euro voor Netflix
+        stats.co2Uitstoot += _unused * 0.015; // 15g CO₂ per uur streaming
+        stats.toonStats();
 
         return null; // of de volgende echte state
     }

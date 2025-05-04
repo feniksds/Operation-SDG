@@ -5,7 +5,7 @@ public class GasState extends State {
         super("Kook je thuis op gas of inductie?", Map.of(
             1, "Gas",
             2, "Inductie"
-        ));
+        ),"multi","images/Kook je thuis op gas of inductie.png");
     }
 
     @Override

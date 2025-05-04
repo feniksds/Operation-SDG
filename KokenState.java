@@ -5,7 +5,7 @@ public class KokenState extends State{
         super("Kook je zelf of doet iemand anders dat voor jou?", Map.of(
             1, "Ik kook zelf",
             2, "Iemand anders kookt"
-        ));
+        ),"multi","images/Kook je zelf of doet iemand anders dat voor jou.png");
     }
 
     @Override

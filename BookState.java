@@ -6,7 +6,7 @@ public class BookState extends State {
             1, "In digitale vorm",
             2, "Nieuw",
             3, "Tweedehands"
-        ));
+        ),"multi","images/Hoe koop je je studieboeken.png");
     }
 
     @Override

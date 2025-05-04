@@ -3,21 +3,23 @@ import java.util.Map;
 public class AutoState extends State {
     public AutoState() {
         super("Welk type voertuig gebruik je?", Map.of(
-            1, "Elektrisch",
-            2, "Diesel",
-            3, "Hybride",
-            4, "Benzine"
-        ));
+                        1, "Elektrisch",
+                        2, "Diesel",
+                        3, "Hybride",
+                        4, "Benzine"
+                ), "multi",
+                "images/Welk type voertuig gebruik je.png");
     }
+
     ;
 
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats) {
-        double afstand=0;
-        if(stats.ritFactor == 10){
-            afstand= 62.1;
-        }else{
-            afstand= 3.9;
+        double afstand = 0;
+        if (stats.ritFactor == 10) {
+            afstand = 62.1;
+        } else {
+            afstand = 3.9;
         }
 
         if (keuze == 1) {
@@ -28,11 +30,11 @@ public class AutoState extends State {
             //diesel
             stats.co2Uitstoot += afstand * 0.192;
             stats.financieleImpact -= Main.monthToWeekly(1001);
-        }else if(keuze == 3){
+        } else if (keuze == 3) {
             //hybride
             stats.co2Uitstoot += afstand * 0.186;
             stats.financieleImpact -= Main.monthToWeekly(1173);
-        }else if(keuze == 4){
+        } else if (keuze == 4) {
             //benzine
             stats.co2Uitstoot += afstand * 0.205;
             stats.financieleImpact -= Main.monthToWeekly(1002);

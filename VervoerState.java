@@ -6,7 +6,7 @@ public class VervoerState  extends State {
             1, "Auto",
             2, "Trein",
             3, "Ander vervoer"
-        ));
+        ),"multi","images/Neem je de trein,de auto of het openbaar vervoer.png");
     }
 
     @Override
@@ -24,6 +24,8 @@ public class VervoerState  extends State {
             //stats here
             return new TreinState();
         }
+        stats.toonStats();
+
         return this;
     }
 

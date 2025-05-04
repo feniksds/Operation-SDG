@@ -3,7 +3,7 @@ import java.util.Scanner;
 //TODO checken Radi
 public class VeganState extends State {
     public VeganState() {
-        super("🌱 Vegan/vegetarisch", Map.of()); // geen standaardopties
+        super("🌱 Vegan/vegetarisch", Map.of(),"input","images/Hoe vaak per week eet je vegan of vegetarisch.png"); // geen standaardopties
     }
 
     @Override
@@ -13,6 +13,7 @@ public class VeganState extends State {
 
     @Override
     public State verwerkKeuze(int _unused, StudentStats stats) {
+        /*
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
 
@@ -32,6 +33,15 @@ public class VeganState extends State {
 
         // Voorbeeldimpact: veganistisch eten bespaart CO₂-uitstoot en afval
         stats.co2Uitstoot -= aantalKeer * 1.67*0.25;
+
+        stats.toonStats();
+
+         */
+
+        // Voorbeeldimpact: veganistisch eten bespaart CO₂-uitstoot en afval
+        stats.co2Uitstoot -= _unused * 1.67*0.25;
+
+        stats.toonStats();
 
         return new FruitState(); // volgende state
     }

@@ -5,7 +5,7 @@ public class SchoolState extends State{
         super("Gebruik je een tekentablet of papier om te tekenen?", Map.of(
             1, "Tekentablet",
             2, "Papier"
-        ));
+        ),"multi","images/Gebruik je een tekentablet of papier om te tekenen.png");
     }
 
     @Override
@@ -19,6 +19,8 @@ public class SchoolState extends State{
             stats.co2Uitstoot+=2.814;
             stats.financieleImpact-=Main.monthToWeekly(0.94);
         }
+        stats.toonStats();
+
         return new BookState();
     }
 }

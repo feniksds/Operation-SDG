@@ -9,7 +9,7 @@ public class VervoerInGentState extends State {
             2, "Elektrische fiets (verbruik verhoogt licht)",
             3, "Tram (verkeer + CO₂-uitstoot)",
             4, "Te voet (0 impact)"
-        ));
+        ),"multi","images/Hoe ga je naar school.png");
     }
 
     @Override
@@ -23,6 +23,8 @@ public class VervoerInGentState extends State {
         } else if (keuze == 4) {
             stats.co2Uitstoot += 0;
         }
+        stats.toonStats();
+
         return null;
     }
 }

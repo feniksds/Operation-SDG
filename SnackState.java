@@ -7,7 +7,7 @@ public class SnackState extends State {
             2, "Appel",
             3, "Suikerwafel",
             4, "Chips"
-        ));
+        ),"multi","images/Welke snacks eet je doorgaans tijdens het studeren.png");
     }
 
     @Override
@@ -34,6 +34,8 @@ public class SnackState extends State {
             stats.academischeImpact+= 2;
             map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.0025*5);
         }
+        stats.toonStats();
+
         return new LibraryState();
     }
 }

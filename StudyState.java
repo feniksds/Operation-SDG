@@ -6,7 +6,7 @@ public class StudyState extends State{
             1, "Nooit",
             2, "Af en toe",
             3, "Vaak"
-        ));
+        ),"multi","images/Hoe vaak gebruik je AI-tools tijdens het studeren.png");
     }
 
     @Override
@@ -23,6 +23,8 @@ public class StudyState extends State{
             stats.co2Uitstoot+=Main.yeartoWeekly(10.61);
             stats.academischeImpact+= 2;
         }
+        stats.toonStats();
+
         return new SnackState();
     }
 }

@@ -5,7 +5,7 @@ public class ClothingState extends State {
         super("Wat voor soort kleren koop je meestal?", Map.of(
             1, "Nieuw",
             2, "Tweedehands"
-        ));
+        ),"multi","images/Wat voor soort kleren koop je meestal.png");
     }
 
     @Override
@@ -20,6 +20,8 @@ public class ClothingState extends State {
             stats.financieleImpact-= 20;
             stats.eenmaligeAankopen-= 20;
         }
+
+        stats.toonStats();
         return new SubscribeState();
     }
 }

@@ -7,7 +7,7 @@ public class TreinState extends State {
             2, "Bus",
             3, "Te voet",
             4, "Tram"
-        ));
+        ),"multi","images/Hoe verplaats je je van thuis naar het station of van campus naar je kot.png");
     }
 
     @Override
@@ -25,6 +25,8 @@ public class TreinState extends State {
             stats.co2Uitstoot += 0.041*3.9;
             stats.financieleImpact -= Main.yeartoWeekly(215);
         }
+        stats.toonStats();
+
         return new EtenStartState();
     }
 }

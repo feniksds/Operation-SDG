@@ -6,7 +6,7 @@ public class BoodschappenState extends State {
             1, "Biologisch (bio)",
             2, "Merkproducten",
             3, "Huismerkproducten"
-        ));
+        ), "multi","images/default.png");
     }
 
     @Override

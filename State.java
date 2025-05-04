@@ -4,12 +4,31 @@ import java.util.*;
 public abstract class State {
     protected String beschrijving;
     protected Map<Integer, String> opties;
+    private String imagePath;
+    private String inputTye;
 
-
-
-    public State(String beschrijving, Map<Integer, String> opties) {
+    public State(String beschrijving, Map<Integer, String> opties, String inputType, String imagePath) {
         this.beschrijving = beschrijving;
         this.opties = new TreeMap<>(opties);
+        this.inputTye = inputType;
+        this.imagePath = imagePath;
+
+    }
+
+    public String getBeschrijving() {
+        return beschrijving;
+    }
+
+    public Map<Integer, String> getOpties() {
+        return opties;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public String getInputType() {
+        return inputTye;
     }
 
     public void toonOpties() {

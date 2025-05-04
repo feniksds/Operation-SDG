@@ -3,9 +3,9 @@ import java.util.Map;
 public class StartState extends State {
     public StartState() {
         super("Waar ga je naar school?", Map.of(
-            1, "Ver",
-            2, "Dichtbij"
-        ));
+                1, "Ver",
+                2, "Dichtbij"
+        ),"multi", "images/waar ga je naar school.png");
     }
 
     @Override
@@ -17,6 +17,8 @@ public class StartState extends State {
             //geen stat aanpassingen
             return new TreinState();
         }
+        stats.toonStats();
+
         return this;
     }
 }

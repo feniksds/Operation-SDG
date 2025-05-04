@@ -3,7 +3,7 @@ import java.util.Scanner;
 //TODO checken  RADI
 public class HelloFreshState extends State {
     public HelloFreshState() {
-        super("🍽️ Maaltijdbezorging", Map.of()); // lege map zodat standaard opties niet worden getoond
+        super("🍽️ Maaltijdbezorging", Map.of(),"input","images/Hoe vaak per week eet je kant-en-klare maaltijden.png"); // lege map zodat standaard opties niet worden getoond
     }
 
     @Override
@@ -14,6 +14,9 @@ public class HelloFreshState extends State {
     @Override
     public State verwerkKeuze(int _unused, StudentStats stats) {
         Map<String, Double> map =stats.afvalProductie;
+
+        /*
+
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
 
@@ -31,9 +34,17 @@ public class HelloFreshState extends State {
             }
         }
 
+
         // voorbeeldimpact per maaltijd
         stats.financieleImpact += aantalKeer * 11.98;   // bv. 10 euro per maaltijd
         stats.co2Uitstoot += aantalKeer * 8.1;       // bv. 700g CO₂ per maaltijd
+        map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.038);
+        map.put("Karton", map.getOrDefault("Karton", 0.0) + 0.097);
+         */
+
+        // voorbeeldimpact per maaltijd
+        stats.financieleImpact += _unused * 11.98;   // bv. 10 euro per maaltijd
+        stats.co2Uitstoot += _unused * 8.1;       // bv. 700g CO₂ per maaltijd
         map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.038);
         map.put("Karton", map.getOrDefault("Karton", 0.0) + 0.097);
 

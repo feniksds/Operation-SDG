@@ -1,9 +1,10 @@
 import java.util.Map;
 import java.util.Scanner;
+
 //TODO checken  RADI
 public class TakeawayState extends State {
     public TakeawayState() {
-        super("🍱 Afhaalmaaltijden", Map.of()); // geen standaardopties
+        super("🍱 Afhaalmaaltijden", Map.of(),"input", "images/Hoe vaak per week bestel je Takeaway (zoals Deliveroo, Uber Eats, lokale restaurants...).png"); // geen standaardopties
     }
 
     @Override
@@ -13,6 +14,7 @@ public class TakeawayState extends State {
 
     @Override
     public State verwerkKeuze(int _unused, StudentStats stats) {
+        /*
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
 
@@ -32,8 +34,17 @@ public class TakeawayState extends State {
 
         // Voorbeeldimpact per bestelling
         stats.financieleImpact += aantalKeer * 10;           // bv. €13 per bestelling
-        stats.co2Uitstoot += aantalKeer * (0.06+0.72+0.34)/3;                // bv. 2.8 kg CO₂ per maaltijd
+        stats.co2Uitstoot += aantalKeer * (0.06 + 0.72 + 0.34) / 3;                // bv. 2.8 kg CO₂ per maaltijd
 
+        stats.toonStats();
+
+         */
+
+        // Voorbeeldimpact per bestelling
+        stats.financieleImpact += _unused * 10;           // bv. €13 per bestelling
+        stats.co2Uitstoot += _unused * (0.06 + 0.72 + 0.34) / 3;                // bv. 2.8 kg CO₂ per maaltijd
+
+        stats.toonStats();
 
         return new HelloFreshState(); // volgende state
     }

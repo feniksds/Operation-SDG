@@ -5,7 +5,7 @@ public class VerblijfState extends State {
         super("Waar woon je, thuis of op kot?", Map.of(
             1, "Thuis",
             2, "Op kot"
-        ));
+        ),"multi","images/Waar woon je, thuis of op kot.png");
     }
 
     @Override
@@ -15,6 +15,8 @@ public class VerblijfState extends State {
         } else if (keuze == 2) {
             stats.ritFactor = 2; //als als week gerekend wordt anders negeren en per dag
         }
+        stats.toonStats();
+
         return new VervoerState();
 
     }

@@ -5,7 +5,7 @@ public class FinancialState extends State {
         super("Welke laptop kies je voor je studies?", Map.of(
             1, "Nieuwe laptop",
             2, "Een tweedehands laptop"
-        ));
+        ),"multi","images/Welke laptop kies je voor je studies.png");
     }
 
     @Override

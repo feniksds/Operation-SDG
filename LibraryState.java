@@ -7,7 +7,7 @@ public class LibraryState extends State{
             2, "Bibliotheek",
             3, "Café",
             4,"Café om te zuipen"
-        ));
+        ),"multi","images/Wat is je favoriete plek om te studeren.png");
     }
 
     @Override

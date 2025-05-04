@@ -7,7 +7,7 @@ public class EtenStartState extends State {
             2, "Huishouden van 3 personen",
             3, "Huishouden van 4 personen",
             4, "Huishouden van 5 personen"
-        ));
+        ),"multi","images/Hoe groot is je huishouden.png");
     }
 
     @Override

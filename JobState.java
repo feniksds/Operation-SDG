@@ -7,7 +7,7 @@ public class JobState extends State{
             2, "Weekendjob",
             3, "Parttime",
             4, "Fulltime"
-        ));
+        ),"multi","images/Heb je een studentenjob.png");
     }
 
     @Override

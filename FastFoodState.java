@@ -3,7 +3,7 @@ import java.util.Scanner;
 //TODO checken  RADI
 public class FastFoodState extends State {
     public FastFoodState() {
-        super("🍔 Fastfoodconsumptie", Map.of()); // geen standaardopties
+        super("🍔 Fastfoodconsumptie", Map.of(),"input","images/Hoe vaak per week eet je fastfood (zoals McDonald's, Quick...).png"); // geen standaardopties
     }
 
     @Override
@@ -13,6 +13,7 @@ public class FastFoodState extends State {
 
     @Override
     public State verwerkKeuze(int _unused, StudentStats stats) {
+        /*
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
 
@@ -33,6 +34,11 @@ public class FastFoodState extends State {
         // Voorbeeldimpact per fastfoodmaaltijd
         stats.financieleImpact += aantalKeer *9.95 ;       // bv. €9 per maaltijd
         stats.co2Uitstoot += aantalKeer * (2.35+0.15+0.255);            // bv. 2.1 kg CO₂ per maaltijd
+
+         */
+
+        stats.financieleImpact += _unused *9.95 ;       // bv. €9 per maaltijd
+        stats.co2Uitstoot += _unused * (2.35+0.15+0.255);            // bv. 2.1 kg CO₂ per maaltijd
 
         return new TakeawayState(); // volgende state
     }

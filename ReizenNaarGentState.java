@@ -10,7 +10,7 @@ public class ReizenNaarGentState extends State {
         super("Hoe reis je naar Gent?", Map.of(
             1, "Met de auto (CO₂ + filevorming)",
             2, "Met de trein (lage CO₂, maar druk)"
-        ));
+        ),"multi","images/Hoe reis je naar Gent.png");
     }
 
     @Override
@@ -22,6 +22,8 @@ public class ReizenNaarGentState extends State {
         } else if (keuze == 2) {
             stats.co2Uitstoot += 5;
         }
+
+        stats.toonStats();
         return null;
     }
 }
