@@ -101,7 +101,7 @@ public class SimulatorUI extends JFrame {
         add(mainPanel);
 
         // Start with the first state
-        setCurrentState(new StartState());
+        setCurrentState(new StudyState());
     }
 
     private void setCurrentState(State state) {
@@ -137,10 +137,13 @@ public class SimulatorUI extends JFrame {
                 final int choice = entry.getKey();
                 button.addActionListener(e -> {
                     State nextState = currentState.verwerkKeuze(choice, stats);
+                    System.out.printf("Keuze gemaakt: %d, volgende staat: %s%n", choice, nextState);
                     if (nextState != null) {
+                        System.out.println("Next state: " + nextState.getBeschrijving());
                         setCurrentState(nextState);
                         stats.toonStats();
                     } else {
+                        System.out.println("Geen volgende staat, eindigen");
                         System.out.println("Final state reached");
                         showFinalResults();
                     }
@@ -178,8 +181,10 @@ public class SimulatorUI extends JFrame {
                     }
                     State nextState = currentState.verwerkKeuze(value, stats);
                     if (nextState != null) {
+                        System.out.println("Next state: " + nextState.getBeschrijving());
                         setCurrentState(nextState);
                     } else {
+                        System.out.println("Geen volgende staat, eindigen");
                         showFinalResults();
                     }
                 } catch (NumberFormatException ex) {
@@ -282,26 +287,253 @@ public class SimulatorUI extends JFrame {
     }
 
     private void showFinalResults() {
-        // Clear the UI
-        optionsPanel.removeAll();
+        // Clear the main panel and create a new results panel
+        mainPanel.removeAll();
 
-        // Show final stats
-        JLabel finalLabel = new JLabel("Simulatie voltooid!");
-        finalLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        finalLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        optionsPanel.add(finalLabel);
+        JPanel resultsPanel = new JPanel(new BorderLayout(20, 20));
+        resultsPanel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+        resultsPanel.setBackground(new Color(240, 248, 255)); // Light blue background
 
-        JButton restartButton = new JButton("Opnieuw beginnen");
-        restartButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Top header section
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setOpaque(false);
+
+        JLabel headerLabel = new JLabel("Je Ecologische Voetafdruk");
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        headerLabel.setForeground(new Color(46, 125, 50)); // Green color
+        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        headerPanel.add(headerLabel, BorderLayout.CENTER);
+
+        // Add congratulatory message
+        JLabel subHeaderLabel = new JLabel("Simulatie voltooid! Hier is jouw milieu-impact:");
+        subHeaderLabel.setFont(new Font("Arial", Font.ITALIC, 18));
+        subHeaderLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        headerPanel.add(subHeaderLabel, BorderLayout.SOUTH);
+
+        resultsPanel.add(headerPanel, BorderLayout.NORTH);
+
+        // Center content with statistics
+        JPanel statsPanel = new JPanel(new GridLayout(0, 2, 20, 15));
+        statsPanel.setOpaque(false);
+
+        // CO2 Stats with visual bar
+        addStatWithBar(statsPanel, "CO₂ Uitstoot", stats.co2Uitstoot, "kg",
+                new Color(255, 87, 34), // Orange-red for CO2
+                Math.min(stats.co2Uitstoot / 50, 1.0)); // Scale based on value
+
+        // Financial impact with visual bar
+        addStatWithBar(statsPanel, "Financiële Impact", stats.financieleImpact, "€",
+                new Color(33, 150, 243), // Blue for money
+                Math.min(stats.financieleImpact / 100, 1.0)); // Scale based on value
+
+        // Academic impact with visual bar
+        addStatWithBar(statsPanel, "Academische Impact", stats.academischeImpact, "punten",
+                new Color(76, 175, 80), // Green for academic
+                Math.min(stats.academischeImpact / 10, 1.0)); // Scale based on value
+
+        // Waste production stats
+        if (!stats.afvalProductie.isEmpty()) {
+            JPanel wastePanel = new JPanel(new GridLayout(0, 1, 5, 5));
+            wastePanel.setOpaque(false);
+
+            JLabel wasteLabel = new JLabel("Afvalproductie:");
+            wasteLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            wastePanel.add(wasteLabel);
+
+            for (Map.Entry<String, Double> entry : stats.afvalProductie.entrySet()) {
+                addStatWithBar(wastePanel, entry.getKey(), entry.getValue(), "kg",
+                        new Color(121, 85, 72), // Brown for waste
+                        Math.min(entry.getValue() / 5, 1.0)); // Scale based on value
+            }
+
+            statsPanel.add(wastePanel);
+        }
+
+        // Environmental impact summary
+        JPanel impactPanel = new JPanel();
+        impactPanel.setOpaque(false);
+        impactPanel.setLayout(new BoxLayout(impactPanel, BoxLayout.Y_AXIS));
+
+        JLabel impactHeader = new JLabel("Jouw Milieu-Impact");
+        impactHeader.setFont(new Font("Arial", Font.BOLD, 16));
+        impactPanel.add(impactHeader);
+
+        // Determine environmental rating based on CO2 and waste
+        String rating;
+        Color ratingColor;
+
+        double totalImpact = stats.co2Uitstoot;
+        for (Double wasteValue : stats.afvalProductie.values()) {
+            totalImpact += wasteValue * 2; // Weight waste impact
+        }
+
+        if (totalImpact < 20) {
+            rating = "Uitstekend! Minimale impact";
+            ratingColor = new Color(76, 175, 80); // Green
+        } else if (totalImpact < 50) {
+            rating = "Goed! Bewuste keuzes";
+            ratingColor = new Color(139, 195, 74); // Light green
+        } else if (totalImpact < 100) {
+            rating = "Gemiddeld. Ruimte voor verbetering";
+            ratingColor = new Color(255, 193, 7); // Amber
+        } else {
+            rating = "Hoog verbruik. Overweeg duurzamere keuzes";
+            ratingColor = new Color(244, 67, 54); // Red
+        }
+
+        JLabel ratingLabel = new JLabel(rating);
+        ratingLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        ratingLabel.setForeground(ratingColor);
+        impactPanel.add(ratingLabel);
+
+        // Add tips based on stats
+        JTextArea tipsArea = new JTextArea();
+        tipsArea.setEditable(false);
+        tipsArea.setWrapStyleWord(true);
+        tipsArea.setLineWrap(true);
+        tipsArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        tipsArea.setBackground(new Color(243, 243, 243));
+        tipsArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        StringBuilder tips = new StringBuilder("Tips om je impact te verminderen:\n\n");
+        if (stats.co2Uitstoot > 30) {
+            tips.append("• Verlaag je CO₂-uitstoot door vaker de fiets te gebruiken\n");
+        }
+        if (stats.financieleImpact > 50) {
+            tips.append("• Overweeg tweedehands aankopen om kosten te besparen\n");
+        }
+        tips.append("• Recyclen en hergebruiken vermindert je afvalproductie\n");
+        tips.append("• Efficiënt studeren verlaagt je energieverbruik");
+
+        tipsArea.setText(tips.toString());
+
+        statsPanel.add(impactPanel);
+
+        JScrollPane scrollPane = new JScrollPane(statsPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getViewport().setBackground(resultsPanel.getBackground());
+        resultsPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Bottom action buttons
+        JPanel actionPanel = new JPanel();
+        actionPanel.setOpaque(false);
+
+        JButton restartButton = new JButton("Opnieuw Beginnen");
+        restartButton.setFont(new Font("Arial", Font.BOLD, 16));
+        restartButton.setBackground(new Color(46, 125, 50));
+        restartButton.setForeground(Color.WHITE);
+        restartButton.setFocusPainted(false);
         restartButton.addActionListener(e -> {
             stats = new StudentStats();
-            setCurrentState(new SchoolState());
+            mainPanel.removeAll();
+            mainPanel.setLayout(new BorderLayout());
+
+            // Restore the original components
+            mainPanel.add(titleLabel, BorderLayout.NORTH);
+            JLayeredPane layeredPane = new JLayeredPane();
+            layeredPane.setLayout(null);
+            layeredPane.add(imageLabel, JLayeredPane.DEFAULT_LAYER);
+            layeredPane.add(optionsPanel, JLayeredPane.PALETTE_LAYER);
+            mainPanel.add(layeredPane, BorderLayout.CENTER);
+            mainPanel.add(statsLabel, BorderLayout.EAST);
+
+            setCurrentState(new StartState());
         });
-        optionsPanel.add(Box.createVerticalStrut(20));
-        optionsPanel.add(restartButton);
+
+        JButton saveButton = new JButton("Resultaten Opslaan");
+        saveButton.setFont(new Font("Arial", Font.BOLD, 16));
+        saveButton.setBackground(new Color(33, 150, 243));
+        saveButton.setForeground(Color.WHITE);
+        saveButton.setFocusPainted(false);
+        saveButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Resultaten opslaan");
+            int userSelection = fileChooser.showSaveDialog(this);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File fileToSave = fileChooser.getSelectedFile();
+                    if (!fileToSave.getName().endsWith(".txt")) {
+                        fileToSave = new File(fileToSave.getAbsolutePath() + ".txt");
+                    }
+
+                    java.io.PrintWriter writer = new java.io.PrintWriter(fileToSave);
+                    writer.println("Eco Simulator Resultaten");
+                    writer.println("========================");
+                    writer.printf("CO₂-uitstoot: %.2f kg%n", stats.co2Uitstoot);
+                    writer.printf("Financiële impact: €%.2f%n", stats.financieleImpact);
+                    writer.printf("Academische impact: %.1f punten%n", stats.academischeImpact);
+                    writer.println("\nAfvalproductie:");
+                    for (Map.Entry<String, Double> entry : stats.afvalProductie.entrySet()) {
+                        writer.printf("- %s: %.2f kg%n", entry.getKey(), entry.getValue());
+                    }
+                    writer.println("\nAlgemene beoordeling:");
+                    writer.println(rating);
+                    writer.close();
+
+                    JOptionPane.showMessageDialog(this,
+                            "Resultaten opgeslagen in " + fileToSave.getName(),
+                            "Opgeslagen", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this,
+                            "Fout bij opslaan: " + ex.getMessage(),
+                            "Fout", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        actionPanel.add(restartButton);
+        actionPanel.add(Box.createHorizontalStrut(20));
+        actionPanel.add(saveButton);
+
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setOpaque(false);
+        bottomPanel.add(tipsArea, BorderLayout.CENTER);
+        bottomPanel.add(actionPanel, BorderLayout.SOUTH);
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
+        resultsPanel.add(bottomPanel, BorderLayout.SOUTH);
+
+        mainPanel.add(resultsPanel);
 
         revalidate();
         repaint();
+    }
+
+    // Helper method to add a stat with a visual bar
+    private void addStatWithBar(JPanel panel, String label, double value, String unit, Color barColor, double fillRatio) {
+        JPanel statPanel = new JPanel(new BorderLayout(5, 0));
+        statPanel.setOpaque(false);
+
+        JLabel statLabel = new JLabel(label + ": " + String.format("%.2f", value) + " " + unit);
+        statLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        statPanel.add(statLabel, BorderLayout.NORTH);
+
+        // Create visual bar
+        JPanel barPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                int w = getWidth();
+                int h = getHeight();
+
+                // Draw background
+                g.setColor(new Color(220, 220, 220));
+                g.fillRect(0, 0, w, h);
+
+                // Draw filled part
+                g.setColor(barColor);
+                g.fillRect(0, 0, (int) (w * fillRatio), h);
+
+                // Draw border
+                g.setColor(Color.DARK_GRAY);
+                g.drawRect(0, 0, w - 1, h - 1);
+            }
+        };
+        barPanel.setPreferredSize(new Dimension(100, 15));
+        statPanel.add(barPanel, BorderLayout.CENTER);
+
+        panel.add(statPanel);
     }
 
     public static void main(String[] args) {
