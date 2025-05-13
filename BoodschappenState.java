@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 //TODO Radi checken  ("KGa dit deprecaten want geen data ofzo" Feniks )
 public class BoodschappenState extends State {
@@ -10,7 +11,7 @@ public class BoodschappenState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
+    public State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries) {
         if (keuze == 1) {
             //actie stats
         } else if (keuze == 2) {

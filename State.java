@@ -12,7 +12,6 @@ public abstract class State {
         this.opties = new TreeMap<>(opties);
         this.inputTye = inputType;
         this.imagePath = imagePath;
-
     }
 
     public String getBeschrijving() {
@@ -39,7 +38,7 @@ public abstract class State {
         System.out.print("Maak een keuze: ");
     }
 
-    public abstract State verwerkKeuze(int keuze, StudentStats stats);
+    public abstract State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries);
 }
 
 

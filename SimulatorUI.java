@@ -140,7 +140,8 @@ public class SimulatorUI extends JFrame {
                 button.setBackground(new Color(240, 240, 240, 220));
                 final int choice = entry.getKey();
                 button.addActionListener(e -> {
-                    State nextState = currentState.verwerkKeuze(choice, stats);
+                    State nextState = currentState.verwerkKeuze(choice, stats, logEntries);
+
                     System.out.printf("Keuze gemaakt: %d, volgende staat: %s%n", choice, nextState);
                     if (nextState != null) {
                         System.out.println("Next state: " + nextState.getBeschrijving());
@@ -183,7 +184,7 @@ public class SimulatorUI extends JFrame {
                                 "Geef een positief getal", "Fout", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    State nextState = currentState.verwerkKeuze(value, stats);
+                    State nextState = currentState.verwerkKeuze(value, stats, logEntries);
                     if (nextState != null) {
                         System.out.println("Next state: " + nextState.getBeschrijving());
                         setCurrentState(nextState);

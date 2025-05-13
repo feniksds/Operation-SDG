@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 //TODO checken  RADI
@@ -15,7 +16,7 @@ public class AmountState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int _unused, StudentStats stats) {
+    public State verwerkKeuze(int _unused, StudentStats stats, List<LogEntry> logEntries) {
         /*
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
@@ -41,8 +42,12 @@ public class AmountState extends State {
          */
 
         stats.financieleImpact += _unused*stats.prijsVoedsel; // prijs per maaltijd maal aantal keren
-        stats.co2Uitstoot += _unused*stats.eetCO2; ;
-
+        stats.co2Uitstoot += _unused*stats.eetCO2;
+        //List<LogEntry> logEntries;
+        StatChange statChange = new StatChange();
+        statChange.setFinancieleImpactChange(_unused*stats.prijsVoedsel);
+        statChange.setCo2UitstootChange(_unused*stats.eetCO2);
+        logEntries.add(new LogEntry("🍳 Zelf koken",Integer.toString(_unused),statChange));
         return new FastFoodState(); // volgende logische state
     }
 }
