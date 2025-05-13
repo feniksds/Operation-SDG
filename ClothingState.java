@@ -12,7 +12,7 @@ public class ClothingState extends State {
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
             //nieuw
-            stats.co2Uitstoot+=270;
+            stats.co2Uitstoot+=5.192;
             stats.financieleImpact-=  60;
             stats.eenmaligeAankopen-= 60;
         } else if (keuze == 2) {
