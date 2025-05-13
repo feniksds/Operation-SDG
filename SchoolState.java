@@ -12,7 +12,7 @@ public class SchoolState extends State{
     public State verwerkKeuze(int keuze, StudentStats stats) {
         if (keuze == 1) {
             //tablet
-            stats.co2Uitstoot+=170;
+            stats.co2Uitstoot+=3.269;
             stats.financieleImpact-=Main.monthToWeekly(8.68);
         } else if (keuze == 2) {
             //papier
