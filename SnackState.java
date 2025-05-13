@@ -29,7 +29,7 @@ public class SnackState extends State {
         }else if(keuze == 4){
             //actie stat
             //chips
-            stats.co2Uitstoot+=69.3*5;
+            stats.co2Uitstoot+=0.0693*5;
             stats.financieleImpact-=0.70*5;
             stats.academischeImpact+= 2;
             map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.0025*5);
