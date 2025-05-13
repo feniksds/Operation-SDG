@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -17,10 +19,12 @@ public class SimulatorUI extends JFrame {
     private JLabel statsLabel;
     private State currentState;
     private StudentStats stats;
+    private List<LogEntry> logEntries;
 
     public SimulatorUI() {
         // Initialize student stats
         stats = new StudentStats();
+        logEntries = new ArrayList<>();
 
         // Set up the frame
         setTitle("Eco Simulator");

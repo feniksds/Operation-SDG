@@ -5,6 +5,7 @@ public class StateMachine {
     private Scanner scanner;
     private StudentStats stats;
 
+
     public StateMachine() {
         this.scanner = new Scanner(System.in);
         this.stats = new StudentStats();
