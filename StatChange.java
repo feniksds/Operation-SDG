@@ -2,15 +2,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StatChange {
-    private double co2UitstootChange;
-    private double academischeImpactChange;
-    private double financieleImpactChange;
-    private int ritFactorChange;
-    private double eetFactorChange;
-    private double prijsVoedselChange;
-    private double eetCO2Change;
-    private double eenmaligeAankopenChange;
-    private Map<String, Double> afvalProductieChange;
+    private double co2UitstootChange; //houd CO2 uitstoot bij
+    private double academischeImpactChange; //houd academische impact bij
+    private double financieleImpactChange; //houd financiele impact bij
+    private int ritFactorChange; //ritFactor is een factor die andere factoren aanpast naargelang van de gevolgen van het voertuig
+    private double eetFactorChange; //eetFactor is een factor die andere factoren aanpast naargelang van de gevolgen van het voedsel
+    private double prijsVoedselChange; //prijsVoedsel is een factor die andere factoren aanpast naargelang van de gevolgen van het voedsel
+    private double eetCO2Change; //eetCO2 is een factor die andere factoren aanpast naargelang van de gevolgen van het voedsel ( CO2  voor 1 maaltijd ofzo en die dan voor de algemene in rekening gebracht wordt maal aantal dagen)
+    private double eenmaligeAankopenChange; // absoluut aantal euro  dat eenmalig aangekocht wordt (is dus een subdeel van financiele impact
+    private Map<String, Double> afvalProductieChange;   // bevat de afvalproductie per soort afval (bijv. papier, plastic, etc.) en de bijbehorende verandering in productie
 
     // Default constructor
     public StatChange() {
