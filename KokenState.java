@@ -11,13 +11,17 @@ public class KokenState extends State{
 
     @Override
     public State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries) {
+        StatChange statChange = new StatChange();
         if (keuze == 1) {
             //zelf
             stats.prijsVoedsel+= 7.57 * stats.eetFactor;
+            statChange.setPrijsVoedselChange(7.57 * stats.eetFactor);
         } else if (keuze == 2) {
             //iemand anders
             //niks volgens Radi.
         }
+
+        logEntries.add(new LogEntry(this.beschrijving,opties.get(keuze),statChange));
         return new VleesState();
     }
 }

@@ -32,7 +32,7 @@ public class StudyState extends State{
             statChange.setCo2UitstootChange(Main.yeartoWeekly(10.61));
             statChange.setAcademischeImpactChange(2);
         }
-        
+
         stats.toonStats();
         logEntries.add(new LogEntry(this.beschrijving,opties.get(keuze),statChange));
 
