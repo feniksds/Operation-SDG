@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 public class SchoolState extends State{
@@ -9,7 +10,7 @@ public class SchoolState extends State{
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
+    public State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries) {
         if (keuze == 1) {
             //tablet
             stats.co2Uitstoot+=3.269;

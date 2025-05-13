@@ -24,7 +24,7 @@ public class SimulatorUI extends JFrame {
     public SimulatorUI() {
         // Initialize student stats
         stats = new StudentStats();
-        logEntries = new ArrayList<>();
+        logEntries = new ArrayList<LogEntry>();
 
         // Set up the frame
         setTitle("Eco Simulator");
@@ -105,7 +105,7 @@ public class SimulatorUI extends JFrame {
         add(mainPanel);
 
         // Start with the first state
-        setCurrentState(new StudyState());
+        setCurrentState(new EtenStartState());
     }
 
     private void setCurrentState(State state) {

@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 //TODO checken Radi
@@ -12,7 +13,7 @@ public class VeganState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int _unused, StudentStats stats) {
+    public State verwerkKeuze(int _unused, StudentStats stats, List<LogEntry> logEntries) {
         /*
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
@@ -42,6 +43,9 @@ public class VeganState extends State {
         stats.co2Uitstoot -= _unused * 1.67*0.25;
 
         stats.toonStats();
+        StatChange statChange = new StatChange();
+        statChange.setEetCO2Change(- _unused * 1.67*0.25);
+        logEntries.add(new LogEntry(this.beschrijving,Integer.toString(_unused),statChange));
 
         return new FruitState(); // volgende state
     }

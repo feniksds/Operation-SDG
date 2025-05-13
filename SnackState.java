@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 public class SnackState extends State {
@@ -11,7 +12,7 @@ public class SnackState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
+    public State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries) {
         Map<String, Double> map =stats.afvalProductie;
         if(keuze == 1) {
             //geen actie

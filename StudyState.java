@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 public class StudyState extends State{
@@ -10,7 +11,9 @@ public class StudyState extends State{
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
+    public State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries) {
+        StatChange statChange = new StatChange();
+
         if (keuze == 1) {
             //actie stat
             //NIKS
@@ -18,12 +21,20 @@ public class StudyState extends State{
             //af en toe
             stats.co2Uitstoot+= Main.yeartoWeekly(5.304);
             stats.academischeImpact+= 1;
+
+            statChange.setCo2UitstootChange(Main.yeartoWeekly(5.304));
+            statChange.setAcademischeImpactChange(1);
         }else if(keuze == 3){
             //vaak
             stats.co2Uitstoot+=Main.yeartoWeekly(10.61);
             stats.academischeImpact+= 2;
+
+            statChange.setCo2UitstootChange(Main.yeartoWeekly(10.61));
+            statChange.setAcademischeImpactChange(2);
         }
+        
         stats.toonStats();
+        logEntries.add(new LogEntry(this.beschrijving,opties.get(keuze),statChange));
 
         return new SnackState();
     }

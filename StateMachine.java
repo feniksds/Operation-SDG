@@ -4,6 +4,7 @@ public class StateMachine {
     private State huidigeState;
     private Scanner scanner;
     private StudentStats stats;
+    private List<LogEntry> logEntries = new ArrayList<>();
 
 
     public StateMachine() {
@@ -11,6 +12,7 @@ public class StateMachine {
         this.stats = new StudentStats();
         this.huidigeState = new StartState();
     }
+
 
     public void start() {
     while (huidigeState != null) {
@@ -36,12 +38,13 @@ public class StateMachine {
             }
         }
 
-        huidigeState = huidigeState.verwerkKeuze(keuze, stats);
+        huidigeState = huidigeState.verwerkKeuze(keuze, stats,logEntries);
     }
 
     stats.toonStats();
     System.out.println("\n📌 Week afgelopen! Dit was jouw impact op de wereld.");
 }
+
 
     public void evalueer() {
 

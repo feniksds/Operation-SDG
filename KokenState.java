@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 //TODO Radi checken
 public class KokenState extends State{
@@ -9,7 +10,7 @@ public class KokenState extends State{
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
+    public State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries) {
         if (keuze == 1) {
             //zelf
             stats.prijsVoedsel+= 7.57 * stats.eetFactor;

@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 //TODO Radi checken
 public class GasState extends State {
@@ -9,14 +10,19 @@ public class GasState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
+    public State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries) {
+        StatChange statChange = new StatChange();
         if (keuze == 1) {
             //Gas
             stats.eetCO2 += Main.yearToDaily(80);
+            statChange.setEetCO2Change(Main.yearToDaily(80));
         } else if (keuze == 2) {
             //Inductie
             stats.eetCO2 += Main.yearToDaily(60);
+            statChange.setEetCO2Change(Main.yearToDaily(60));
         }
+
+        logEntries.add(new LogEntry(this.beschrijving,opties.get(keuze),statChange));
         return new KokenState();
     }
 }

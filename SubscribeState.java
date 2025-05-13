@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ public class SubscribeState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int _unused, StudentStats stats) {
+    public State verwerkKeuze(int _unused, StudentStats stats, List<LogEntry> logEntries) {
         /*
         Scanner scanner = new Scanner(System.in);
         double aantalUren = -1;
@@ -44,6 +45,12 @@ public class SubscribeState extends State {
         stats.financieleImpact += 15; // bv. 15 euro voor Netflix
         stats.co2Uitstoot += _unused * 0.015; // 15g CO₂ per uur streaming
         stats.toonStats();
+
+        StatChange statChange = new StatChange();
+        statChange.setCo2UitstootChange( _unused * 0.015);
+        statChange.setFinancieleImpactChange(15);
+
+        logEntries.add(new LogEntry(this.beschrijving,Integer.toString(_unused),statChange));
 
         return null; // of de volgende echte state
     }

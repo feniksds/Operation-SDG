@@ -3,6 +3,7 @@
 //DEPRECATED
 //DEPRECATED
 //DEPRECATED
+import java.util.List;
 import java.util.Map;
 
 public class ReizenNaarGentState extends State {
@@ -14,7 +15,7 @@ public class ReizenNaarGentState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int keuze, StudentStats stats) {
+    public State verwerkKeuze(int keuze, StudentStats stats, List<LogEntry> logEntries) {
         Map<String, Double> map =stats.afvalProductie;
         if (keuze == 1) {
             stats.co2Uitstoot += 30;

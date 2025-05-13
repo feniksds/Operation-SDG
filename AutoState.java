@@ -57,6 +57,7 @@ public class AutoState extends State {
         }
 
 
+        
         logEntries.add(new LogEntry("Welk type voertuig gebruik je?",keuzeString,statChange));
         return new EtenStartState();
     }

@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ public class TakeawayState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int _unused, StudentStats stats) {
+    public State verwerkKeuze(int _unused, StudentStats stats, List<LogEntry> logEntries) {
         /*
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
@@ -46,6 +47,11 @@ public class TakeawayState extends State {
 
         stats.toonStats();
 
+        StatChange statChange = new StatChange();
+        statChange.setEetCO2Change(_unused * (0.06 + 0.72 + 0.34) / 3);
+        statChange.setCo2UitstootChange(_unused * 10);
+
+        logEntries.add(new LogEntry(this.beschrijving,Integer.toString(_unused),statChange));
         return new HelloFreshState(); // volgende state
     }
 }

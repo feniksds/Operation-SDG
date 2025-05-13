@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 //TODO checken  RADI
@@ -12,7 +13,7 @@ public class FastFoodState extends State {
     }
 
     @Override
-    public State verwerkKeuze(int _unused, StudentStats stats) {
+    public State verwerkKeuze(int _unused, StudentStats stats, List<LogEntry> logEntries) {
         /*
         Scanner scanner = new Scanner(System.in);
         int aantalKeer = -1;
@@ -36,10 +37,12 @@ public class FastFoodState extends State {
         stats.co2Uitstoot += aantalKeer * (2.35+0.15+0.255);            // bv. 2.1 kg CO₂ per maaltijd
 
          */
-
+        StatChange statChange = new StatChange();
         stats.financieleImpact += _unused *9.95 ;       // bv. €9 per maaltijd
-        stats.co2Uitstoot += _unused * (2.35+0.15+0.255);            // bv. 2.1 kg CO₂ per maaltijd
-
+        stats.co2Uitstoot += _unused * (2.35+0.15+0.255);// bv. 2.1 kg CO₂ per maaltijd
+        statChange.setFinancieleImpactChange(_unused *9.95);
+        statChange.setCo2UitstootChange(_unused * (2.35+0.15+0.255));
+        logEntries.add(new LogEntry(this.beschrijving,Integer.toString(_unused),statChange));
         return new TakeawayState(); // volgende state
     }
 }
