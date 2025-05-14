@@ -299,6 +299,14 @@ public class SimulatorUI extends JFrame {
         resultsPanel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
         resultsPanel.setBackground(new Color(240, 248, 255)); // Light blue background
 
+        // Create a tabbed pane to organize content
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setFont(new Font("Arial", Font.BOLD, 16));
+
+        // ===== SUMMARY TAB =====
+        JPanel summaryPanel = new JPanel(new BorderLayout(20, 20));
+        summaryPanel.setBackground(resultsPanel.getBackground());
+
         // Top header section
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
@@ -315,7 +323,7 @@ public class SimulatorUI extends JFrame {
         subHeaderLabel.setHorizontalAlignment(SwingConstants.CENTER);
         headerPanel.add(subHeaderLabel, BorderLayout.SOUTH);
 
-        resultsPanel.add(headerPanel, BorderLayout.NORTH);
+        summaryPanel.add(headerPanel, BorderLayout.NORTH);
 
         // Center content with statistics
         JPanel statsPanel = new JPanel(new GridLayout(0, 2, 20, 15));
@@ -335,6 +343,51 @@ public class SimulatorUI extends JFrame {
         addStatWithBar(statsPanel, "Academische Impact", stats.academischeImpact, "punten",
                 new Color(76, 175, 80), // Green for academic
                 Math.min(stats.academischeImpact / 10, 1.0)); // Scale based on value
+
+        // One-time purchases with visual bar
+        addStatWithBar(statsPanel, "Eenmalige Aankopen", stats.eenmaligeAankopen, "€",
+                new Color(156, 39, 176), // Purple for one-time purchases
+                Math.min(stats.eenmaligeAankopen / 100, 1.0)); // Scale based on value
+
+        // Food CO2 with visual bar if there's any food CO2 tracked
+        if (stats.eetCO2 > 0) {
+            addStatWithBar(statsPanel, "CO₂ uit Voedsel", stats.eetCO2, "kg",
+                    new Color(255, 152, 0), // Orange for food CO2
+                    Math.min(stats.eetCO2 / 20, 1.0)); // Scale based on value
+        }
+
+        // Food price with visual bar if there's any food price tracked
+        if (stats.prijsVoedsel > 0) {
+            addStatWithBar(statsPanel, "Uitgaven aan Voedsel", stats.prijsVoedsel, "€",
+                    new Color(0, 188, 212), // Cyan for food price
+                    Math.min(stats.prijsVoedsel / 50, 1.0)); // Scale based on value
+        }
+
+        // Eating factor panel if it's not default (1.0)
+        if (stats.eetFactor != 1.0) {
+            JPanel eetFactorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            eetFactorPanel.setOpaque(false);
+
+            JLabel eetFactorLabel = new JLabel("Eetfactor: " + String.format("%.2f", stats.eetFactor));
+            eetFactorLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            eetFactorLabel.setToolTipText("Factor voor voedselimpact gebaseerd op huishoudgrootte");
+            eetFactorPanel.add(eetFactorLabel);
+
+            statsPanel.add(eetFactorPanel);
+        }
+
+        // Transportation factor panel if it's not 0
+        if (stats.ritFactor > 0) {
+            JPanel ritFactorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            ritFactorPanel.setOpaque(false);
+
+            JLabel ritFactorLabel = new JLabel("Ritfactor: " + stats.ritFactor);
+            ritFactorLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            ritFactorLabel.setToolTipText("Factor voor transportimpact per week");
+            ritFactorPanel.add(ritFactorLabel);
+
+            statsPanel.add(ritFactorPanel);
+        }
 
         // Waste production stats
         if (!stats.afvalProductie.isEmpty()) {
@@ -363,11 +416,11 @@ public class SimulatorUI extends JFrame {
         impactHeader.setFont(new Font("Arial", Font.BOLD, 16));
         impactPanel.add(impactHeader);
 
-        // Determine environmental rating based on CO2 and waste
+        // Determine environmental rating based on CO2, waste, and food CO2
         String rating;
         Color ratingColor;
 
-        double totalImpact = stats.co2Uitstoot;
+        double totalImpact = stats.co2Uitstoot + stats.eetCO2;
         for (Double wasteValue : stats.afvalProductie.values()) {
             totalImpact += wasteValue * 2; // Weight waste impact
         }
@@ -391,7 +444,52 @@ public class SimulatorUI extends JFrame {
         ratingLabel.setForeground(ratingColor);
         impactPanel.add(ratingLabel);
 
-        // Add tips based on stats
+        statsPanel.add(impactPanel);
+
+        JScrollPane statsScrollPane = new JScrollPane(statsPanel);
+        statsScrollPane.setBorder(null);
+        statsScrollPane.getViewport().setBackground(resultsPanel.getBackground());
+        summaryPanel.add(statsScrollPane, BorderLayout.CENTER);
+
+        // ===== JOURNEY TAB =====
+        JPanel journeyPanel = new JPanel(new BorderLayout(20, 20));
+        journeyPanel.setBackground(resultsPanel.getBackground());
+
+        // Journey header
+        JPanel journeyHeaderPanel = new JPanel(new BorderLayout());
+        journeyHeaderPanel.setOpaque(false);
+
+        JLabel journeyHeaderLabel = new JLabel("Jouw Duurzaamheidsreis");
+        journeyHeaderLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        journeyHeaderLabel.setForeground(new Color(0, 121, 107)); // Teal color
+        journeyHeaderLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        journeyHeaderPanel.add(journeyHeaderLabel, BorderLayout.CENTER);
+
+        JLabel journeySubHeaderLabel = new JLabel("De keuzes die je hebt gemaakt en hun invloed op het milieu");
+        journeySubHeaderLabel.setFont(new Font("Arial", Font.ITALIC, 16));
+        journeySubHeaderLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        journeyHeaderPanel.add(journeySubHeaderLabel, BorderLayout.SOUTH);
+
+        journeyPanel.add(journeyHeaderPanel, BorderLayout.NORTH);
+
+        // Create timeline panel with logs
+        JPanel timelinePanel = createJourneyTimeline();
+        JScrollPane timelineScrollPane = new JScrollPane(timelinePanel);
+        timelineScrollPane.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
+        timelineScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        journeyPanel.add(timelineScrollPane, BorderLayout.CENTER);
+
+        // Add panels to tabbed pane
+        tabbedPane.addTab("Samenvatting", new ImageIcon(), summaryPanel, "Bekijk je milieu-impact");
+        tabbedPane.addTab("Jouw Reis", new ImageIcon(), journeyPanel, "Bekijk je duurzaamheidsreis");
+
+        // Set custom tab colors
+        tabbedPane.setBackgroundAt(0, new Color(225, 245, 254)); // Light blue for summary
+        tabbedPane.setBackgroundAt(1, new Color(225, 245, 234)); // Light teal for journey
+
+        resultsPanel.add(tabbedPane, BorderLayout.CENTER);
+
+        // Tips area
         JTextArea tipsArea = new JTextArea();
         tipsArea.setEditable(false);
         tipsArea.setWrapStyleWord(true);
@@ -407,17 +505,16 @@ public class SimulatorUI extends JFrame {
         if (stats.financieleImpact > 50) {
             tips.append("• Overweeg tweedehands aankopen om kosten te besparen\n");
         }
+        if (stats.eetCO2 > 10) {
+            tips.append("• Kies vaker voor plantaardig voedsel om je voedsel-CO₂ te verlagen\n");
+        }
+        if (stats.eenmaligeAankopen > 100) {
+            tips.append("• Overweeg of je alle eenmalige aankopen echt nodig hebt\n");
+        }
         tips.append("• Recyclen en hergebruiken vermindert je afvalproductie\n");
-        tips.append("• Efficiënt studeren verlaagt je energieverbruik");
+        tips.append("• Efficiënt studeren verhoogt je academische impact");
 
         tipsArea.setText(tips.toString());
-
-        statsPanel.add(impactPanel);
-
-        JScrollPane scrollPane = new JScrollPane(statsPanel);
-        scrollPane.setBorder(null);
-        scrollPane.getViewport().setBackground(resultsPanel.getBackground());
-        resultsPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Bottom action buttons
         JPanel actionPanel = new JPanel();
@@ -430,6 +527,7 @@ public class SimulatorUI extends JFrame {
         restartButton.setFocusPainted(false);
         restartButton.addActionListener(e -> {
             stats = new StudentStats();
+            logEntries.clear();
             mainPanel.removeAll();
             mainPanel.setLayout(new BorderLayout());
 
@@ -442,7 +540,7 @@ public class SimulatorUI extends JFrame {
             mainPanel.add(layeredPane, BorderLayout.CENTER);
             mainPanel.add(statsLabel, BorderLayout.EAST);
 
-            setCurrentState(new StartState());
+            setCurrentState(new EtenStartState());
         });
 
         JButton saveButton = new JButton("Resultaten Opslaan");
@@ -466,14 +564,45 @@ public class SimulatorUI extends JFrame {
                     writer.println("Eco Simulator Resultaten");
                     writer.println("========================");
                     writer.printf("CO₂-uitstoot: %.2f kg%n", stats.co2Uitstoot);
+                    if (stats.eetCO2 > 0) {
+                        writer.printf("CO₂ uit voedsel: %.2f kg%n", stats.eetCO2);
+                    }
                     writer.printf("Financiële impact: €%.2f%n", stats.financieleImpact);
                     writer.printf("Academische impact: %.1f punten%n", stats.academischeImpact);
+
+                    if (stats.eenmaligeAankopen > 0) {
+                        writer.printf("Eenmalige aankopen: €%.2f%n", stats.eenmaligeAankopen);
+                    }
+
+                    if (stats.eetFactor != 1.0) {
+                        writer.printf("Eetfactor: %.2f%n", stats.eetFactor);
+                    }
+
+                    if (stats.ritFactor > 0) {
+                        writer.printf("Ritfactor: %d%n", stats.ritFactor);
+                    }
+
+                    if (stats.prijsVoedsel > 0) {
+                        writer.printf("Uitgaven aan voedsel: €%.2f%n", stats.prijsVoedsel);
+                    }
+
                     writer.println("\nAfvalproductie:");
                     for (Map.Entry<String, Double> entry : stats.afvalProductie.entrySet()) {
                         writer.printf("- %s: %.2f kg%n", entry.getKey(), entry.getValue());
                     }
+
+                    writer.println("\nGemaakte keuzes:");
+                    int choiceNum = 1;
+                    for (LogEntry entry : logEntries) {
+                        writer.printf("%d. %s: %s%n", choiceNum++, entry.getVraag(), entry.getGemaakteKeuze());
+                    }
+
                     writer.println("\nAlgemene beoordeling:");
                     writer.println(rating);
+
+                    writer.println("\nTips:");
+                    writer.println(tips.toString().replace("Tips om je impact te verminderen:\n\n", ""));
+
                     writer.close();
 
                     JOptionPane.showMessageDialog(this,
@@ -487,9 +616,74 @@ public class SimulatorUI extends JFrame {
             }
         });
 
+        JButton exportImageButton = new JButton("Overzicht Exporteren");
+        exportImageButton.setFont(new Font("Arial", Font.BOLD, 16));
+        exportImageButton.setBackground(new Color(0, 150, 136));
+        exportImageButton.setForeground(Color.WHITE);
+        exportImageButton.setFocusPainted(false);
+        exportImageButton.addActionListener(e -> {
+            try {
+                // Get current tab component to export
+                Component selectedTab = tabbedPane.getSelectedComponent();
+                if (selectedTab instanceof JPanel) {
+                    JPanel panelToExport = (JPanel) selectedTab;
+
+                    // Create buffered image for the panel
+                    BufferedImage image = new BufferedImage(
+                            panelToExport.getWidth(),
+                            panelToExport.getHeight(),
+                            BufferedImage.TYPE_INT_RGB);
+
+                    Graphics2D g2d = image.createGraphics();
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                    g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+                    panelToExport.paint(g2d);
+                    g2d.dispose();
+
+                    // Show file chooser
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Overzicht opslaan als afbeelding");
+
+                    // Set file filter for PNG images
+                    fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+                        public boolean accept(File f) {
+                            return f.isDirectory() || f.getName().toLowerCase().endsWith(".png");
+                        }
+
+                        public String getDescription() {
+                            return "PNG Afbeeldingen (*.png)";
+                        }
+                    });
+
+                    int userSelection = fileChooser.showSaveDialog(this);
+
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        File fileToSave = fileChooser.getSelectedFile();
+                        if (!fileToSave.getName().endsWith(".png")) {
+                            fileToSave = new File(fileToSave.getAbsolutePath() + ".png");
+                        }
+
+                        ImageIO.write(image, "png", fileToSave);
+
+                        JOptionPane.showMessageDialog(this,
+                                "Overzicht opgeslagen als " + fileToSave.getName(),
+                                "Opgeslagen", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Fout bij exporteren: " + ex.getMessage(),
+                        "Fout", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         actionPanel.add(restartButton);
         actionPanel.add(Box.createHorizontalStrut(20));
         actionPanel.add(saveButton);
+        actionPanel.add(Box.createHorizontalStrut(20));
+        actionPanel.add(exportImageButton);
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setOpaque(false);
@@ -498,12 +692,219 @@ public class SimulatorUI extends JFrame {
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
 
         resultsPanel.add(bottomPanel, BorderLayout.SOUTH);
-
         mainPanel.add(resultsPanel);
 
         revalidate();
         repaint();
     }
+
+    private JPanel createJourneyTimeline() {
+        // Main timeline panel with vertical BoxLayout
+        JPanel timelinePanel = new JPanel();
+        timelinePanel.setLayout(new BoxLayout(timelinePanel, BoxLayout.Y_AXIS));
+        timelinePanel.setBackground(new Color(255, 255, 255));
+        timelinePanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+
+        if (logEntries.isEmpty()) {
+            JLabel emptyLabel = new JLabel("Geen keuzes geregistreerd in deze simulatie");
+            emptyLabel.setFont(new Font("Arial", Font.ITALIC, 18));
+            emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            timelinePanel.add(emptyLabel);
+            return timelinePanel;
+        }
+
+        JLabel journeyTitleLabel = new JLabel("Je hebt " + logEntries.size() + " keuzes gemaakt");
+        journeyTitleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        journeyTitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        timelinePanel.add(journeyTitleLabel);
+        timelinePanel.add(Box.createVerticalStrut(20));
+
+        // Add each log entry as a timeline event
+        int entryNumber = 1;
+        for (LogEntry entry : logEntries) {
+            JPanel eventPanel = createTimelineEvent(entry, entryNumber++);
+            timelinePanel.add(eventPanel);
+
+            // Add connector line between events (except for the last one)
+            if (entryNumber <= logEntries.size()) {
+                JPanel connectorPanel = new JPanel() {
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.setColor(new Color(200, 200, 200));
+                        int centerX = getWidth() / 2;
+                        g.drawLine(centerX, 0, centerX, getHeight());
+                    }
+                };
+                connectorPanel.setPreferredSize(new Dimension(20, 20));
+                connectorPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
+                connectorPanel.setOpaque(false);
+                timelinePanel.add(connectorPanel);
+            }
+        }
+
+        return timelinePanel;
+    }
+
+    private JPanel createTimelineEvent(LogEntry entry, int entryNumber) {
+        // Create panel for the event
+        JPanel eventPanel = new JPanel(new BorderLayout(15, 10));
+        eventPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+        eventPanel.setBackground(new Color(250, 250, 250));
+        eventPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
+
+        // Create left side with number indicator
+        JPanel markerPanel = new JPanel(new BorderLayout());
+        markerPanel.setOpaque(false);
+
+        JLabel numberLabel = new JLabel(String.valueOf(entryNumber));
+        numberLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        numberLabel.setForeground(Color.WHITE);
+        numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        numberLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+        // Create circular background for number
+        JPanel circlePanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Choose a color based on entry number
+                Color[] colors = {
+                        new Color(46, 125, 50),    // Green
+                        new Color(0, 121, 107),    // Teal
+                        new Color(2, 119, 189),    // Blue
+                        new Color(142, 36, 170),   // Purple
+                        new Color(230, 81, 0)      // Orange
+                };
+                g2d.setColor(colors[(entryNumber - 1) % colors.length]);
+
+                int diameter = Math.min(getWidth(), getHeight()) - 4;
+                int x = (getWidth() - diameter) / 2;
+                int y = (getHeight() - diameter) / 2;
+                g2d.fillOval(x, y, diameter, diameter);
+                g2d.dispose();
+            }
+        };
+
+        circlePanel.setPreferredSize(new Dimension(40, 40));
+        circlePanel.add(numberLabel);
+        markerPanel.add(circlePanel, BorderLayout.CENTER);
+
+        eventPanel.add(markerPanel, BorderLayout.WEST);
+
+        // Create content panel for event details
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setOpaque(false);
+
+        // Question
+        JLabel questionLabel = new JLabel(entry.getVraag());
+        questionLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        questionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // Choice
+        JLabel choiceLabel = new JLabel("Jouw keuze: " + entry.getGemaakteKeuze());
+        choiceLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        choiceLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // Stats impact
+        JPanel impactPanel = new JPanel();
+        impactPanel.setLayout(new BoxLayout(impactPanel, BoxLayout.Y_AXIS));
+        impactPanel.setOpaque(false);
+        impactPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        impactPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel impactHeaderLabel = new JLabel("Impact van deze keuze:");
+        impactHeaderLabel.setFont(new Font("Arial", Font.ITALIC, 14));
+        impactPanel.add(impactHeaderLabel);
+
+        StatChange statChange = entry.getStatChange();
+
+        // Only add stats that actually changed
+        if (statChange.getCo2UitstootChange() != 0) {
+            addImpactLine(impactPanel, "CO₂-uitstoot", statChange.getCo2UitstootChange(), "kg");
+        }
+
+        if (statChange.getFinancieleImpactChange() != 0) {
+            addImpactLine(impactPanel, "Financiële impact", statChange.getFinancieleImpactChange(), "€");
+        }
+
+        if (statChange.getAcademischeImpactChange() != 0) {
+            addImpactLine(impactPanel, "Academische impact", statChange.getAcademischeImpactChange(), "punten");
+        }
+
+        if (statChange.getAfvalProductieChange() != null && !statChange.getAfvalProductieChange().isEmpty()) {
+            JLabel wasteLabel = new JLabel("Afvalproductie:");
+            wasteLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+            impactPanel.add(wasteLabel);
+
+            for (Map.Entry<String, Double> wasteEntry : statChange.getAfvalProductieChange().entrySet()) {
+                if (wasteEntry.getValue() != 0) {
+                    addImpactLine(impactPanel, "- " + wasteEntry.getKey(), wasteEntry.getValue(), "kg");
+                }
+            }
+        }
+
+        // If no impacts were registered, add a note
+        if (impactPanel.getComponentCount() <= 1) {
+            JLabel noImpactLabel = new JLabel("Geen directe milieu-impact");
+            noImpactLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+            impactPanel.add(noImpactLabel);
+        }
+
+        contentPanel.add(questionLabel);
+        contentPanel.add(Box.createVerticalStrut(5));
+        contentPanel.add(choiceLabel);
+        contentPanel.add(impactPanel);
+
+        eventPanel.add(contentPanel, BorderLayout.CENTER);
+
+        return eventPanel;
+    }
+
+    private void addImpactLine(JPanel panel, String label, double value, String unit) {
+        JPanel linePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        linePanel.setOpaque(false);
+
+        JLabel textLabel = new JLabel(label + ":");
+        textLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+
+        String formattedValue;
+        if (value > 0) {
+            formattedValue = "+" + String.format("%.2f", value);
+        } else {
+            formattedValue = String.format("%.2f", value);
+        }
+
+        JLabel valueLabel = new JLabel(formattedValue + " " + unit);
+        valueLabel.setFont(new Font("Arial", Font.BOLD, 13));
+
+        // Color-code impacts (green for positive, red for negative)
+        if ((label.contains("CO₂") || label.contains("Afval")) && value > 0) {
+            valueLabel.setForeground(new Color(213, 0, 0)); // Red for increased CO2/waste
+        } else if ((label.contains("CO₂") || label.contains("Afval")) && value < 0) {
+            valueLabel.setForeground(new Color(0, 137, 123)); // Green for decreased CO2/waste
+        } else if (label.contains("Academische") && value > 0) {
+            valueLabel.setForeground(new Color(0, 137, 123)); // Green for increased academic
+        } else if (label.contains("Academische") && value < 0) {
+            valueLabel.setForeground(new Color(213, 0, 0)); // Red for decreased academic
+        } else if (label.contains("Financiële") && value > 0) {
+            valueLabel.setForeground(new Color(0, 137, 123)); // Green for increased financial
+        } else if (label.contains("Financiële") && value < 0) {
+            valueLabel.setForeground(new Color(213, 0, 0)); // Red for decreased financial
+        }
+
+        linePanel.add(textLabel);
+        linePanel.add(valueLabel);
+
+        panel.add(linePanel);
+    }
+
 
     // Helper method to add a stat with a visual bar
     private void addStatWithBar(JPanel panel, String label, double value, String unit, Color barColor, double fillRatio) {
