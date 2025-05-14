@@ -42,14 +42,14 @@ public class TakeawayState extends State {
          */
 
         // Voorbeeldimpact per bestelling
-        stats.financieleImpact += _unused * 10;           // bv. €13 per bestelling
+        stats.financieleImpact -= _unused * 10;           // bv. €13 per bestelling
         stats.co2Uitstoot += _unused * (0.06 + 0.72 + 0.34) / 3;                // bv. 2.8 kg CO₂ per maaltijd
 
         stats.toonStats();
 
         StatChange statChange = new StatChange();
-        statChange.setEetCO2Change(_unused * (0.06 + 0.72 + 0.34) / 3);
-        statChange.setCo2UitstootChange(_unused * 10);
+        statChange.setCo2UitstootChange(_unused * (0.06 + 0.72 + 0.34) / 3);
+        statChange.setFinancieleImpactChange(_unused * 10);
 
         logEntries.add(new LogEntry(this.beschrijving,Integer.toString(_unused),statChange));
         return new HelloFreshState(); // volgende state
