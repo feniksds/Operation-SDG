@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,9 @@ public class FinancialState extends State {
             statChange.setFinancieleImpactChange(-6.25);
             statChange.setEenmaligeAankopenChange(-1200);
             statChange.setAcademischeImpactChange(2);
-            statChange.setAfvalProductieChange(map);
+            Map<String, Double> afvalDelta = new HashMap<>();
+            afvalDelta.put("industrieel afval", 1200.0);  // alleen de verandering
+            statChange.setAfvalProductieChange(afvalDelta);
         } else if (keuze == 2) {
             //actie stat net genoeg laptop
             stats.co2Uitstoot+=1.077;

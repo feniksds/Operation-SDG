@@ -20,6 +20,8 @@ public class SimulatorUI extends JFrame {
     private State currentState;
     private StudentStats stats;
     private List<LogEntry> logEntries;
+    private int pixels=15;
+    private int pixelfactor=5;
 
     public SimulatorUI() {
         // Initialize student stats
@@ -106,7 +108,7 @@ public class SimulatorUI extends JFrame {
         add(mainPanel);
 
         // Start with the first state
-        setCurrentState(new StartState());  //new SubscribeState()
+        setCurrentState(new StartState());  //new SubscribeState()  new StartState()
     }
 
     private void setCurrentState(State state) {
@@ -330,8 +332,8 @@ public class SimulatorUI extends JFrame {
 
         summaryPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // Center content with statistics
-        JPanel statsPanel = new JPanel(new GridLayout(0, 2, 20, 15));
+        // Center content with statistics   HOOK
+        JPanel statsPanel = new JPanel(new GridLayout(0, 2, 20, 0));
         statsPanel.setOpaque(false);
 
 
@@ -339,7 +341,7 @@ public class SimulatorUI extends JFrame {
         // CO2 Stats with visual bar
         addStatWithBar(statsPanel, "CO₂ Uitstoot", stats.co2Uitstoot, "kg",
                 new Color(255, 87, 34), // Orange-red for CO2
-                Math.clamp(stats.co2Uitstoot / 1000.0, 0.05, 1.0)); // Scale based on value
+                Math.clamp(stats.co2Uitstoot / 250.0, 0.05, 1.0)); // Scale based on value
 
         // Financial impact with visual bar
         double financialRatio = Math.min(Math.abs(stats.financieleImpact) / 3000.0, 1.0);
@@ -357,14 +359,14 @@ public class SimulatorUI extends JFrame {
         if (stats.eetCO2 > 0) {
             addStatWithBar(statsPanel, "CO₂ uit Voedsel", stats.eetCO2, "kg",
                     new Color(255, 152, 0), // Orange for food CO2
-                    Math.clamp(stats.eetCO2 / 100.0, 0.05, 1.0)); // Scale based on value
+                    Math.clamp(stats.eetCO2 / 25.0, 0.05, 1.0)); // Scale based on value
         }
 
         // Food price with visual bar if there's any food price tracked
         if (stats.prijsVoedsel > 0) {
             addStatWithBar(statsPanel, "Uitgaven aan Voedsel", stats.prijsVoedsel, "€",
                     new Color(0, 188, 212), // Cyan for food price
-                    Math.clamp(stats.prijsVoedsel / 70.0, 0.05, 1.0)); // Scale based on value
+                    Math.clamp(stats.prijsVoedsel / 50.0, 0.05, 1.0)); // Scale based on value
         }
 
         // Waste production stats
@@ -377,9 +379,15 @@ public class SimulatorUI extends JFrame {
             wastePanel.add(wasteLabel);
 
             for (Map.Entry<String, Double> entry : stats.afvalProductie.entrySet()) {
-                addStatWithBar(wastePanel, entry.getKey(), entry.getValue(), "kg",
+                if(entry.getValue() == 1200){
+                    addStatWithBarSpeciaal(wastePanel, entry.getKey(),Main.yeartoWeekly(entry.getValue())/4 , "kg",
                         new Color(121, 85, 72), // Brown for waste
-                        Math.clamp(entry.getValue() / 2000.0, 0.05, 1.0)); // Scale based on value
+                        Math.clamp(entry.getValue() / 1500.0, 0.05, 1.0)); // Scale based on value
+                }else{
+                   addStatWithBarSpeciaal(wastePanel, entry.getKey(), entry.getValue(), "kg",
+                        new Color(121, 85, 72), // Brown for waste
+                        Math.clamp(entry.getValue() / 1500.0, 0.05, 1.0)); // Scale based on value
+                }
             }
 
             statsPanel.add(wastePanel);
@@ -398,23 +406,29 @@ public class SimulatorUI extends JFrame {
         String rating;
         Color ratingColor;
 
-        double totalImpact = stats.co2Uitstoot;
+        double totalCO2 = stats.co2Uitstoot;
+        double totalWaste = 0;
         for (Double wasteValue : stats.afvalProductie.values()) {
-            totalImpact += wasteValue * 2; // Weight waste impact
+            if(wasteValue ==1200){
+                totalWaste += Main.yeartoWeekly(wasteValue)/4; // Weight waste impact
+            }else{
+               totalWaste += wasteValue; // Weight waste impact
+            }
+
         }
 
-        if (totalImpact < 20) {
-            rating = "Uitstekend! Minimale impact";
-            ratingColor = new Color(76, 175, 80); // Green
-        } else if (totalImpact < 50) {
-            rating = "Goed! Bewuste keuzes";
-            ratingColor = new Color(139, 195, 74); // Light green
-        } else if (totalImpact < 100) {
-            rating = "Gemiddeld. Ruimte voor verbetering";
-            ratingColor = new Color(255, 193, 7); // Amber
+        if (totalCO2 < 20 && totalWaste < 5) {
+            rating = "Uitstekend! Je ecologische voetafdruk is erg laag.";
+            ratingColor = new Color(76, 175, 80); // Groen
+        } else if (totalCO2 < 35 && totalWaste < 7) {
+            rating = "Goed! Je maakt bewuste keuzes met beperkte impact.";
+            ratingColor = new Color(139, 195, 74); // Lichtgroen
+        } else if (totalCO2 < 60 && totalWaste < 10) {
+            rating = "Gemiddeld. Er is ruimte voor verbetering.";
+            ratingColor = new Color(255, 193, 7); // Geel
         } else {
-            rating = "Hoog verbruik. Overweeg duurzamere keuzes";
-            ratingColor = new Color(244, 67, 54); // Red
+            rating = "Hoge impact. Overweeg duurzamere alternatieven.";
+            ratingColor = new Color(244, 67, 54); // Rood
         }
 
         JLabel ratingLabel = new JLabel(rating);
@@ -425,6 +439,7 @@ public class SimulatorUI extends JFrame {
         statsPanel.add(impactPanel);
 
         JScrollPane statsScrollPane = new JScrollPane(statsPanel);
+        statsScrollPane.getVerticalScrollBar().setUnitIncrement(16);
         statsScrollPane.setBorder(null);
         statsScrollPane.getViewport().setBackground(resultsPanel.getBackground());
         summaryPanel.add(statsScrollPane, BorderLayout.CENTER);
@@ -889,7 +904,7 @@ public class SimulatorUI extends JFrame {
     private void addStatWithBar(JPanel panel, String label, double value, String unit, Color barColor, double fillRatio) {
     JPanel statPanel = new JPanel(new BorderLayout(5, 5));
     statPanel.setOpaque(false);
-    statPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // wat padding
+    statPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5)); // wat padding
 
     JLabel statLabel = new JLabel(label + ": " + String.format("%.2f", value) + " " + unit);
     statLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -905,7 +920,7 @@ public class SimulatorUI extends JFrame {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             int w = getWidth();
-            int h = getHeight()/4;
+            int h = pixels*pixelfactor;
             int arc = 10;
 
             // Achtergrond
@@ -921,7 +936,7 @@ public class SimulatorUI extends JFrame {
             g2.drawRoundRect(0, 0, w - 1, h - 1, arc, arc);
         }
     };
-    barPanel.setPreferredSize(new Dimension(200, 20));
+    barPanel.setPreferredSize(new Dimension(200, pixels*pixelfactor));
     barPanel.setOpaque(false);
     statPanel.add(barPanel, BorderLayout.CENTER);
 
@@ -932,7 +947,7 @@ private void addCenteredStatWithBar(JPanel panel, String label, double value, St
                                     double positiveFillRatio, double negativeFillRatio) {
     JPanel statPanel = new JPanel(new BorderLayout(5, 5));
     statPanel.setOpaque(false);
-    statPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    statPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
     JLabel statLabel = new JLabel(label + ": " + String.format("%.2f", value) + " " + unit);
     statLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -947,7 +962,7 @@ private void addCenteredStatWithBar(JPanel panel, String label, double value, St
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             int w = getWidth();
-            int h = getHeight()/4;
+            int h = pixels*pixelfactor;
             int arc = 10;
 
             g2.setColor(new Color(230, 230, 230));
@@ -976,13 +991,54 @@ private void addCenteredStatWithBar(JPanel panel, String label, double value, St
         }
     };
 
-    barPanel.setPreferredSize(new Dimension(200, 20));
+    barPanel.setPreferredSize(new Dimension(200, pixels*pixelfactor));
     barPanel.setOpaque(false);
     statPanel.add(barPanel, BorderLayout.CENTER);
 
     panel.add(statPanel);
 }
 
+private void addStatWithBarSpeciaal(JPanel panel, String label, double value, String unit, Color barColor, double fillRatio) {
+    JPanel statPanel = new JPanel(new BorderLayout(5, 5));
+    statPanel.setOpaque(false);
+    statPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5)); // wat padding
+
+    JLabel statLabel = new JLabel(label + ": " + String.format("%.2f", value) + " " + unit);
+    statLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+    statLabel.setForeground(new Color(50, 50, 50)); // iets zachter grijs
+    statPanel.add(statLabel, BorderLayout.NORTH);
+
+    // Mooie bar met ronde hoeken
+    JPanel barPanel = new JPanel() {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int w = getWidth();
+            int h = pixels;
+            int arc = 10;
+
+            // Achtergrond
+            g2.setColor(new Color(230, 230, 230));
+            g2.fillRoundRect(0, 0, w, h, arc, arc);
+
+            // Gevulde balk
+            g2.setColor(barColor);
+            g2.fillRoundRect(0, 0, (int) (w * fillRatio), h, arc, arc);
+
+            // Rand
+            g2.setColor(Color.GRAY);
+            g2.drawRoundRect(0, 0, w - 1, h - 1, arc, arc);
+        }
+    };
+    barPanel.setPreferredSize(new Dimension(200, pixels));
+    barPanel.setOpaque(false);
+    statPanel.add(barPanel, BorderLayout.CENTER);
+
+    panel.add(statPanel);
+}
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

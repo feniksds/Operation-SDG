@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -47,11 +48,15 @@ public class HelloFreshState extends State {
         StatChange statChange = new StatChange();
         stats.financieleImpact += _unused * 11.98;   // bv. 10 euro per maaltijd
         stats.co2Uitstoot += _unused * 8.1;       // bv. 700g CO₂ per maaltijd
-        map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.038);
-        map.put("Karton", map.getOrDefault("Karton", 0.0) + 0.097);
+        map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.038* _unused);
+        map.put("Karton", map.getOrDefault("Karton", 0.0) + 0.097 * _unused);
         statChange.setFinancieleImpactChange(_unused * 11.98);
         statChange.setCo2UitstootChange(_unused * 8.1);
-        statChange.setAfvalProductieChange(map);
+
+        Map<String, Double> afvalDelta = new HashMap<>();
+        afvalDelta.put("Plastic", 0.038 * _unused);
+        afvalDelta.put("Karton", 0.097 * _unused);
+        statChange.setAfvalProductieChange(afvalDelta);
 
         logEntries.add(new LogEntry(this.beschrijving,Integer.toString(_unused),statChange));
         return new StudyState();

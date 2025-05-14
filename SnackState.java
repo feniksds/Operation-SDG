@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,9 @@ public class SnackState extends State {
             statChange.setCo2UitstootChange(1.1655*5);
             statChange.setFinancieleImpactChange(-0.19*5);
             statChange.setAcademischeImpactChange(2);
-            statChange.setAfvalProductieChange(map);
+            Map<String, Double> afvalDelta = new HashMap<>();
+            afvalDelta.put("Plastic", 0.006*5);  // alleen de verandering
+            statChange.setAfvalProductieChange(afvalDelta);
         }else if(keuze == 4){
             //actie stat
             //chips
@@ -45,7 +48,9 @@ public class SnackState extends State {
             statChange.setCo2UitstootChange(0.0693*5);
             statChange.setFinancieleImpactChange(-0.70*5);
             statChange.setAcademischeImpactChange(2);
-            statChange.setAfvalProductieChange(map);
+            Map<String, Double> afvalDelta = new HashMap<>();
+            afvalDelta.put("Plastic", 0.0025*5);  // alleen de verandering
+            statChange.setAfvalProductieChange(afvalDelta);
         }
         stats.toonStats();
         logEntries.add(new LogEntry(this.beschrijving,opties.get(keuze),statChange));
