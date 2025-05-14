@@ -393,7 +393,7 @@ public class SimulatorUI extends JFrame {
         String rating;
         Color ratingColor;
 
-        double totalImpact = stats.co2Uitstoot + stats.eetCO2;
+        double totalImpact = stats.co2Uitstoot;
         for (Double wasteValue : stats.afvalProductie.values()) {
             totalImpact += wasteValue * 2; // Weight waste impact
         }
