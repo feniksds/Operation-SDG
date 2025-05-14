@@ -26,6 +26,7 @@ public class SimulatorUI extends JFrame {
         stats = new StudentStats();
         logEntries = new ArrayList<LogEntry>();
 
+
         // Set up the frame
         setTitle("Eco Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -518,7 +519,7 @@ public class SimulatorUI extends JFrame {
             mainPanel.add(layeredPane, BorderLayout.CENTER);
             mainPanel.add(statsLabel, BorderLayout.EAST);
 
-            setCurrentState(new EtenStartState());
+            setCurrentState(new StartState());
         });
 
         JButton saveButton = new JButton("Resultaten Opslaan");
@@ -904,7 +905,7 @@ public class SimulatorUI extends JFrame {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             int w = getWidth();
-            int h = getHeight();
+            int h = getHeight()/4;
             int arc = 10;
 
             // Achtergrond
@@ -946,7 +947,7 @@ private void addCenteredStatWithBar(JPanel panel, String label, double value, St
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             int w = getWidth();
-            int h = getHeight();
+            int h = getHeight()/4;
             int arc = 10;
 
             g2.setColor(new Color(230, 230, 230));
