@@ -105,7 +105,7 @@ public class SimulatorUI extends JFrame {
         add(mainPanel);
 
         // Start with the first state
-        setCurrentState(new EtenStartState());
+        setCurrentState(new SubscribeState());
     }
 
     private void setCurrentState(State state) {
@@ -176,7 +176,7 @@ public class SimulatorUI extends JFrame {
             submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             submitButton.setBackground(new Color(240, 240, 240, 220));
 
-            submitButton.addActionListener(e -> {
+            ActionListener submitAction = e -> {
                 try {
                     int value = Integer.parseInt(inputField.getText());
                     if (value < 0) {
@@ -196,7 +196,11 @@ public class SimulatorUI extends JFrame {
                     JOptionPane.showMessageDialog(this,
                             "Ongeldige invoer. Geef een geheel getal in.", "Fout", JOptionPane.ERROR_MESSAGE);
                 }
-            });
+            };
+
+            // Add the action listener to both the button and input field
+            submitButton.addActionListener(submitAction);
+            inputField.addActionListener(submitAction); // This makes Enter key trigger the same action
 
             inputPanel.add(Box.createVerticalStrut(10));
             inputPanel.add(promptLabel);
@@ -344,11 +348,6 @@ public class SimulatorUI extends JFrame {
                 new Color(76, 175, 80), // Green for academic
                 Math.min(stats.academischeImpact / 10, 1.0)); // Scale based on value
 
-        // One-time purchases with visual bar
-        addStatWithBar(statsPanel, "Eenmalige Aankopen", stats.eenmaligeAankopen, "€",
-                new Color(156, 39, 176), // Purple for one-time purchases
-                Math.min(stats.eenmaligeAankopen / 100, 1.0)); // Scale based on value
-
         // Food CO2 with visual bar if there's any food CO2 tracked
         if (stats.eetCO2 > 0) {
             addStatWithBar(statsPanel, "CO₂ uit Voedsel", stats.eetCO2, "kg",
@@ -361,32 +360,6 @@ public class SimulatorUI extends JFrame {
             addStatWithBar(statsPanel, "Uitgaven aan Voedsel", stats.prijsVoedsel, "€",
                     new Color(0, 188, 212), // Cyan for food price
                     Math.min(stats.prijsVoedsel / 50, 1.0)); // Scale based on value
-        }
-
-        // Eating factor panel if it's not default (1.0)
-        if (stats.eetFactor != 1.0) {
-            JPanel eetFactorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            eetFactorPanel.setOpaque(false);
-
-            JLabel eetFactorLabel = new JLabel("Eetfactor: " + String.format("%.2f", stats.eetFactor));
-            eetFactorLabel.setFont(new Font("Arial", Font.BOLD, 14));
-            eetFactorLabel.setToolTipText("Factor voor voedselimpact gebaseerd op huishoudgrootte");
-            eetFactorPanel.add(eetFactorLabel);
-
-            statsPanel.add(eetFactorPanel);
-        }
-
-        // Transportation factor panel if it's not 0
-        if (stats.ritFactor > 0) {
-            JPanel ritFactorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            ritFactorPanel.setOpaque(false);
-
-            JLabel ritFactorLabel = new JLabel("Ritfactor: " + stats.ritFactor);
-            ritFactorLabel.setFont(new Font("Arial", Font.BOLD, 14));
-            ritFactorLabel.setToolTipText("Factor voor transportimpact per week");
-            ritFactorPanel.add(ritFactorLabel);
-
-            statsPanel.add(ritFactorPanel);
         }
 
         // Waste production stats
