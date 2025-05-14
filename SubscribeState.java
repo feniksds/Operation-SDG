@@ -42,13 +42,13 @@ public class SubscribeState extends State {
          */
 
 
-        stats.financieleImpact += 15; // bv. 15 euro voor Netflix
+        stats.financieleImpact -= 4; // bv. 15 euro voor Netflix
         stats.co2Uitstoot += _unused * 0.015; // 15g CO₂ per uur streaming
         stats.toonStats();
 
         StatChange statChange = new StatChange();
         statChange.setCo2UitstootChange( _unused * 0.015);
-        statChange.setFinancieleImpactChange(15);
+        statChange.setFinancieleImpactChange(-4);
 
         logEntries.add(new LogEntry(this.beschrijving,Integer.toString(_unused),statChange));
 
