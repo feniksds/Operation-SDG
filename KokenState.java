@@ -15,7 +15,7 @@ public class KokenState extends State{
         if (keuze == 1) {
             //zelf
             stats.prijsVoedsel+= 7.57 * stats.eetFactor;
-            statChange.setPrijsVoedselChange(7.57 * stats.eetFactor);
+            statChange.setPrijsVoedselChange(-7.57 * stats.eetFactor);
         } else if (keuze == 2) {
             //iemand anders
             //niks volgens Radi.

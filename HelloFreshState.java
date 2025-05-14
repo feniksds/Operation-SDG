@@ -46,11 +46,11 @@ public class HelloFreshState extends State {
 
         // voorbeeldimpact per maaltijd
         StatChange statChange = new StatChange();
-        stats.financieleImpact += _unused * 11.98;   // bv. 10 euro per maaltijd
+        stats.financieleImpact -= _unused * 11.98;   // bv. 10 euro per maaltijd
         stats.co2Uitstoot += _unused * 8.1;       // bv. 700g CO₂ per maaltijd
         map.put("Plastic", map.getOrDefault("Plastic", 0.0) + 0.038* _unused);
         map.put("Karton", map.getOrDefault("Karton", 0.0) + 0.097 * _unused);
-        statChange.setFinancieleImpactChange(_unused * 11.98);
+        statChange.setFinancieleImpactChange(-_unused * 11.98);
         statChange.setCo2UitstootChange(_unused * 8.1);
 
         Map<String, Double> afvalDelta = new HashMap<>();
