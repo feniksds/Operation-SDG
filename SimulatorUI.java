@@ -467,6 +467,7 @@ public class SimulatorUI extends JFrame {
         resultsPanel.add(tabbedPane, BorderLayout.CENTER);
 
         // Tips area
+        /*
         JTextArea tipsArea = new JTextArea();
         tipsArea.setEditable(false);
         tipsArea.setWrapStyleWord(true);
@@ -492,7 +493,7 @@ public class SimulatorUI extends JFrame {
         tips.append("• Efficiënt studeren verhoogt je academische impact");
 
         tipsArea.setText(tips.toString());
-
+        */
         // Bottom action buttons
         JPanel actionPanel = new JPanel();
         actionPanel.setOpaque(false);
@@ -577,8 +578,8 @@ public class SimulatorUI extends JFrame {
                     writer.println("\nAlgemene beoordeling:");
                     writer.println(rating);
 
-                    writer.println("\nTips:");
-                    writer.println(tips.toString().replace("Tips om je impact te verminderen:\n\n", ""));
+                    //writer.println("\nTips:");
+                    //writer.println(tips.toString().replace("Tips om je impact te verminderen:\n\n", ""));
 
                     writer.close();
 
@@ -664,7 +665,7 @@ public class SimulatorUI extends JFrame {
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setOpaque(false);
-        bottomPanel.add(tipsArea, BorderLayout.CENTER);
+        //bottomPanel.add(tipsArea, BorderLayout.CENTER);
         bottomPanel.add(actionPanel, BorderLayout.SOUTH);
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
 
