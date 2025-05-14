@@ -5,7 +5,7 @@ import java.util.Scanner;
 //TODO checken  RADI
 public class TakeawayState extends State {
     public TakeawayState() {
-        super("🍱 Afhaalmaaltijden", Map.of(),"input", "images/Hoe vaak per week bestel je Takeaway (zoals Deliveroo, Uber Eats, lokale restaurants...).png"); // geen standaardopties
+        super("Hoe vaak per week bestel je Takeaway", Map.of(),"input", "images/Hoe vaak per week bestel je Takeaway (zoals Deliveroo, Uber Eats, lokale restaurants...).png"); // geen standaardopties
     }
 
     @Override

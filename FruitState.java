@@ -4,7 +4,7 @@ import java.util.Scanner;
 //TODO checken Radi
 public class FruitState extends State {
     public FruitState() {
-        super("🍎 Fruitconsumptie", Map.of(),"input","images/Hoe vaak per week eet je fruit.png"); // geen standaardopties
+        super("Hoe vaak per week eet je fruit", Map.of(),"input","images/Hoe vaak per week eet je fruit.png"); // geen standaardopties
     }
 
     @Override

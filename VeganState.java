@@ -4,7 +4,7 @@ import java.util.Scanner;
 //TODO checken Radi
 public class VeganState extends State {
     public VeganState() {
-        super("🌱 Vegan/vegetarisch", Map.of(),"input","images/Hoe vaak per week eet je vegan of vegetarisch.png"); // geen standaardopties
+        super("Hoe vaak per week eet je vegan of vegetarisch", Map.of(),"input","images/Hoe vaak per week eet je vegan of vegetarisch.png"); // geen standaardopties
     }
 
     @Override

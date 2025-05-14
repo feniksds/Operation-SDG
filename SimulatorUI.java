@@ -210,6 +210,10 @@ public class SimulatorUI extends JFrame {
             inputPanel.add(submitButton);
 
             optionsPanel.add(inputPanel);
+
+            SwingUtilities.invokeLater(() -> {
+                inputField.requestFocusInWindow();
+            });
         }
 
         // Update image based on state
@@ -332,7 +336,6 @@ public class SimulatorUI extends JFrame {
         // Center content with statistics
         JPanel statsPanel = new JPanel(new GridLayout(0, 2, 20, 15));
         statsPanel.setOpaque(false);
-
 
 
         // CO2 Stats with visual bar
@@ -800,17 +803,34 @@ public class SimulatorUI extends JFrame {
 
         StatChange statChange = entry.getStatChange();
 
-        // Only add stats that actually changed
+        if (statChange.getEetCO2Change() != 0) {
+            addImpactLine(impactPanel, "CO₂ uit voedsel", statChange.getEetCO2Change(), "kg");
+        }
+
+// Only add stats that actually changed
         if (statChange.getCo2UitstootChange() != 0) {
             addImpactLine(impactPanel, "CO₂-uitstoot", statChange.getCo2UitstootChange(), "kg");
+        }
+
+        if (statChange.getEetCO2Change() != 0) {
+            addImpactLine(impactPanel, "CO₂ uit voedsel", statChange.getEetCO2Change(), "kg");
         }
 
         if (statChange.getFinancieleImpactChange() != 0) {
             addImpactLine(impactPanel, "Financiële impact", statChange.getFinancieleImpactChange(), "€");
         }
 
+        if (statChange.getPrijsVoedselChange() != 0) {
+            addImpactLine(impactPanel, "Financiële impact aan voedsel", statChange.getPrijsVoedselChange(), "€");
+        }
+
         if (statChange.getAcademischeImpactChange() != 0) {
             addImpactLine(impactPanel, "Academische impact", statChange.getAcademischeImpactChange(), "punten");
+        }
+
+
+        if (statChange.getEenmaligeAankopenChange() != 0) {
+            addImpactLine(impactPanel, "Eenmalige aankopen", statChange.getEenmaligeAankopenChange(), "€");
         }
 
         if (statChange.getAfvalProductieChange() != null && !statChange.getAfvalProductieChange().isEmpty()) {
@@ -824,6 +844,7 @@ public class SimulatorUI extends JFrame {
                 }
             }
         }
+
 
         // If no impacts were registered, add a note
         if (impactPanel.getComponentCount() <= 1) {
@@ -859,7 +880,6 @@ public class SimulatorUI extends JFrame {
         JLabel valueLabel = new JLabel(formattedValue + " " + unit);
         valueLabel.setFont(new Font("Arial", Font.BOLD, 13));
 
-        // Color-code impacts (green for positive, red for negative)
         if ((label.contains("CO₂") || label.contains("Afval")) && value > 0) {
             valueLabel.setForeground(new Color(213, 0, 0)); // Red for increased CO2/waste
         } else if ((label.contains("CO₂") || label.contains("Afval")) && value < 0) {
@@ -872,6 +892,10 @@ public class SimulatorUI extends JFrame {
             valueLabel.setForeground(new Color(0, 137, 123)); // Green for increased financial
         } else if (label.contains("Financiële") && value < 0) {
             valueLabel.setForeground(new Color(213, 0, 0)); // Red for decreased financial
+        } else if (label.contains("Eenmalige") && value < 0) {
+            valueLabel.setForeground(new Color(213, 0, 0)); // Red for increased one-time purchases
+        } else {
+            valueLabel.setForeground(Color.BLACK); // Default color
         }
 
         linePanel.add(textLabel);
@@ -883,46 +907,46 @@ public class SimulatorUI extends JFrame {
 
     // Helper method to add a stat with a visual bar
     private void addStatWithBar(JPanel panel, String label, double value, String unit, Color barColor, double fillRatio) {
-    JPanel statPanel = new JPanel(new BorderLayout(5, 5));
-    statPanel.setOpaque(false);
-    statPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // wat padding
+        JPanel statPanel = new JPanel(new BorderLayout(5, 5));
+        statPanel.setOpaque(false);
+        statPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // wat padding
 
-    JLabel statLabel = new JLabel(label + ": " + String.format("%.2f", value) + " " + unit);
-    statLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-    statLabel.setForeground(new Color(50, 50, 50)); // iets zachter grijs
-    statPanel.add(statLabel, BorderLayout.NORTH);
+        JLabel statLabel = new JLabel(label + ": " + String.format("%.2f", value) + " " + unit);
+        statLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        statLabel.setForeground(new Color(50, 50, 50)); // iets zachter grijs
+        statPanel.add(statLabel, BorderLayout.NORTH);
 
-    // Mooie bar met ronde hoeken
-    JPanel barPanel = new JPanel() {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        // Mooie bar met ronde hoeken
+        JPanel barPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            int w = getWidth();
-            int h = getHeight();
-            int arc = 10;
+                int w = getWidth();
+                int h = getHeight();
+                int arc = 10;
 
-            // Achtergrond
-            g2.setColor(new Color(230, 230, 230));
-            g2.fillRoundRect(0, 0, w, h, arc, arc);
+                // Achtergrond
+                g2.setColor(new Color(230, 230, 230));
+                g2.fillRoundRect(0, 0, w, h, arc, arc);
 
-            // Gevulde balk
-            g2.setColor(barColor);
-            g2.fillRoundRect(0, 0, (int) (w * fillRatio), h, arc, arc);
+                // Gevulde balk
+                g2.setColor(barColor);
+                g2.fillRoundRect(0, 0, (int) (w * fillRatio), h, arc, arc);
 
-            // Rand
-            g2.setColor(Color.GRAY);
-            g2.drawRoundRect(0, 0, w - 1, h - 1, arc, arc);
-        }
-    };
-    barPanel.setPreferredSize(new Dimension(200, 20));
-    barPanel.setOpaque(false);
-    statPanel.add(barPanel, BorderLayout.CENTER);
+                // Rand
+                g2.setColor(Color.GRAY);
+                g2.drawRoundRect(0, 0, w - 1, h - 1, arc, arc);
+            }
+        };
+        barPanel.setPreferredSize(new Dimension(200, 20));
+        barPanel.setOpaque(false);
+        statPanel.add(barPanel, BorderLayout.CENTER);
 
-    panel.add(statPanel);
-}
+        panel.add(statPanel);
+    }
 
 
     public static void main(String[] args) {

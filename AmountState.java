@@ -4,7 +4,7 @@ import java.util.Scanner;
 //TODO checken  RADI
 public class AmountState extends State {
     public AmountState() {
-        super("🍳 Zelf koken",
+        super("Hoe vaak per week wordt er gekookt",
                 Map.of(),
                 "input",
                 "images/Hoe vaak per week wordt er door jou of iemand anders thuis of op kot gekookt.png");; // Lege map zodat standaard opties niet worden getoond

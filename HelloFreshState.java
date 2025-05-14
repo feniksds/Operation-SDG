@@ -4,7 +4,7 @@ import java.util.Scanner;
 //TODO checken  RADI
 public class HelloFreshState extends State {
     public HelloFreshState() {
-        super("🍽️ Maaltijdbezorging", Map.of(),"input","images/Hoe vaak per week eet je kant-en-klare maaltijden.png"); // lege map zodat standaard opties niet worden getoond
+        super("Hoe vaak per week eet je kant-en-klare maaltijden", Map.of(),"input","images/Hoe vaak per week eet je kant-en-klare maaltijden.png"); // lege map zodat standaard opties niet worden getoond
     }
 
     @Override
